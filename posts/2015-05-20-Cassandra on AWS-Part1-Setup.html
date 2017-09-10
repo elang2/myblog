@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Cassandra on AWS - Part 1- Setup</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-google"><span class="label">Google</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">April 25, 2017</span>
+									<h1>Cassandra On AWS - Part 1 - Setup</h1>
+								</header>
+
+
+
+This is the first of the multi part series on Cassandra. In each part I will cover one aspect amount setting up, managing and monitoring Cassandra on 
+Amazon Web Services.
+
+
+In this first part I will focus on the <b> setup </b> of <a href="http://cassandra.apache.org/">Cassandra</a> on AWS.
+
+
+<h3>Deployment Model</h3>
+
+
+Cassandra will be set up as a multi-node cluster on AWS. AWS is
+spread over multiple regions and each region has multiple availability
+zones(AZ) within them.
+
+Each region will start with at least 3 nodes in a cluster. 
+The nodes will be spread across different AZ's. Most of the AWS regions have atleast 3 different AZ.
+
+In regions where there are less than 3 AZ's, two nodes will share the same AZ.
+
+<div align="center">
+    <img src="../images/cassandra-aws/cassandra-aws-archi.png" style="width: 50%; height: 50%" />
+    <figcaption><b>Fig 1: Cassandra deployment in a region spread over multiple availability zones (AZ)<b/></figcaption>
+</figure>
+</div>
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
