@@ -5,3 +5,7 @@ pre code {
   display: block;
   padding: 20px;
 }
+
+.circular--square {
+  border-radius: 50%;
+}
