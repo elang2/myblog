@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Cassandra on AWS - Part 2- Scaling</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-google"><span class="label">Google</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">May 23, 2015</span>
+									<h1>Cassandra On AWS - Part 2 - Scaling Strategy</h1>
+								</header>
+
+
+
+This is the second part of the Cassandra series and I will try to talk about Scaling Strategy.
+<br/>
+<br/>
+<h3>Cassandra Scaling Strategy</h3>
+
+
+Cassandra scaling will be based on two factors :
+
+<ul>
+	<li>Latency of response for a request.</li>
+	<li>Amount of disk space left on the Cassandra node.</li>
+</ul>
+
+The cluster will always scale up and never down. Scaling up will improve the latency of a request and also provide new disk space to provide new incoming data.
+
+Scaling will be done as at a cluster level as follows :
+
+<br/><br/>
+<h4>Strategy 1</h4>
+
+<ul>
+	<li>Select the cluster to scale.</li>
+	<li>Select AZ’s with low number of nodes.</li>
+	<li>Choose two AZ’s and add one node to each of the AZ’s.</li>
+</ul>
+
+
+<h4>Strategy 2</h4>
+
+<ul>
+	<li>A cluster will always have a minimum of 3 nodes. Hence scaling in a cluster will be achieve in increments of 3 nodes.</li>
+	<li>If a region has 3 AZ’s then add one node to each AZ.</li>
+	<li>If a region has less than 3 AZ’s then one of the AZ will end up having more nodes than the other AZ.</li>
+</ul>
+
+
+<h4>Strategy 3</h4>
+
+<ul>
+	<li>Latency > 500ms for more than 1 minute.</li>
+	<li>Scale when disk space remaining is less than 30% of the total available diskspace on the node.</li>
+</ul>
+
+</br>
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
