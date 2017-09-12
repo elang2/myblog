@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Google Protobuff as Data Transfer Object</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">August 01, 2015</span>
+									<h1>Google Protobuff as Data Transfer Object</h1>
+								</header>
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/proto/google-protocol-buffers.jpg" style="width: 70%; height: 70%" ></img>
+	</figure>
+</div>
+
+<h3>Why use Protos? </h3>
+
+<p>1. Enforces a contract between sender and receiver services by using its own schema specification language. The PROTOC (Proto compiler) can translate the schema into language specific objects for use in your application.</p>
+
+<p>2. The size of the payload resulting from Protobuff encoding is smaller in comparison to how it would have been if the data were transmitted as JSON or XML.</p>
+
+<p>3. The Protobuff schema is backward compatible. This means that two services using objects generated from different versions of ProtoBuff schema can still send and receive information between them without resulting in any runtime exceptions. The Protobuff framework takes care of serializing fields which match the ones defined in its schema version and ignore any that don't match.</p> 
+
+<p>4. Field level validation and extensibility. Validation for field types, values using Enum and ordinality can be easily defined in the schema. Also one can easily import the schema into other schemas to create new structures.</p>
+
+<p>5. Language interoperability. Since the payload is bytes, the sender and receiver sharing the schema can be implemented in any language. You can have a Java Webservice talk to a different server written in C++.</p>
+
+
+<h3>When to use Protos</h3> 
+
+<p>1. Protos makes sense for back-end system to system services where there is no need to have visibility of the payload being transmitted.</p>
+
+<p>2. Ideal for microservices architecture where each service is deployed independent of each other. The backward compatability of the schemas ensures that different service can work well while still using different versions of the library.</p>
+
+
+<h3>Protos are not ideal for</h3>
+
+<p>1. Front end to backend communication. The payload in case of protos is byte data. It's easier for the front-end to receive a JSON or XML directly than encoded bytes.</p>
+
+<p>2. When large HTML or XML data needs to be transmitted.</p>
+
+<p>3. Want responses in human understandable format.</p>
+
+<p>4. When you don't want to have a contract for communication.</p>
+
+
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
