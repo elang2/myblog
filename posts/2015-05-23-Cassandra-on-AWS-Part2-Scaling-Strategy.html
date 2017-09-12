@@ -52,25 +52,26 @@
 
 
 
-This is the second part of the Cassandra series and I will try to talk about Scaling Strategy.
+This is the second part of the Cassandra series. Here I will discuss about the various scaling strategies that could be applied for scaling a Cassandra cluster.
+
 <br/>
 <br/>
-<h3>Cassandra Scaling Strategy</h3>
+<h3>Scaling Cassandra</h3>
 
 
 Cassandra scaling will be based on two factors :
 
 <ul>
-	<li>Latency of response for a request.</li>
+	<li>Request-Response Latency</li>
 	<li>Amount of disk space left on the Cassandra node.</li>
 </ul>
 
 The cluster will always scale up and never down. Scaling up will improve the latency of a request and also provide new disk space to provide new incoming data.
 
-Scaling will be done as at a cluster level as follows :
+Scaling will be done at a cluster level as follows :
 
 <br/><br/>
-<h4>Strategy 1</h4>
+<h4>Strategy #1</h4>
 
 <ul>
 	<li>Select the cluster to scale.</li>
@@ -79,23 +80,22 @@ Scaling will be done as at a cluster level as follows :
 </ul>
 
 
-<h4>Strategy 2</h4>
+<h4>Strategy #2</h4>
 
 <ul>
 	<li>A cluster will always have a minimum of 3 nodes. Hence scaling in a cluster will be achieve in increments of 3 nodes.</li>
 	<li>If a region has 3 AZ’s then add one node to each AZ.</li>
-	<li>If a region has less than 3 AZ’s then one of the AZ will end up having more nodes than the other AZ.</li>
+	<li>If a region has less than 3 AZ’s then one of the AZ's will end up having more nodes than the other AZ.</li>
 </ul>
 
+</br>
 
-<h4>Strategy 3</h4>
+<h4>Example Scale Out Trigger Points</h4>
 
 <ul>
 	<li>Latency > 500ms for more than 1 minute.</li>
 	<li>Scale when disk space remaining is less than 30% of the total available diskspace on the node.</li>
 </ul>
-
-</br>
 
 
 							</section>

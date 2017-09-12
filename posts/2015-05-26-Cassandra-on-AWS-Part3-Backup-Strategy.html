@@ -49,12 +49,12 @@
 									<span class="date">May 26, 2015</span>
 									<h1>Cassandra on AWS - Part 3 - Backup</h1>
 								</header>
-This third part will focus on the databack up stragey for Cassandra on AWS.
+This third part will focus on the data backup strategy for Cassandra on AWS.
 
 <br/><br/>
 <h4>Cassandra Data Backup Strategy</h4>
 
-In case of a node failure in a cluster, Cassandra can automatically repair and get the node up to speed on the data using the replicated data that is present on the other nodes.
+In case of a node failure in a cluster, Cassandra can automatically repair and bring the node up to speed through replication. It will sync with other nodes in the cluster and use the data present on the other nodes to fix itself.
 
 It is advised to enabled incremental backup and then collect snapshots at a regular intervals( say 24 hrs).
 
@@ -62,7 +62,7 @@ The snapshot backups and incremental backups can be collected from the nodes and
 
 <br/><br/>
 <ul>
-	<li>Snapshot backup should be taken on a daily basis at 12:00 A.M midnight.</li>
+	<li>Snapshot backup should be taken on a daily basis at 12:00 A.M midnight or any other convenient non-peak hours</li>
 	<li>Snapshots & incremental backup files older than 7 days can be deleted from S3.</li>
 	<li>S3 backup location should be named and organized based on Cluster and node names. In case of AWS these will be Region and AZs.</li>
 </ul>
@@ -73,7 +73,7 @@ The snapshot backups and incremental backups can be collected from the nodes and
 
 If a node in a cluster fails or if the node restarts and is out of the cluster for a certain time then it is mandatory to run the node repair tool on the node.
 
-Node repair makes sure that that old delete data(Tombstoned) does not resurrect as new data on this node.
+Node repair makes deletes old data(Tombstoned) and ensures that these deleted data don't resurrect on other nodes as non-deleted data.
 
 Execute the following command on the failed node soon after startup:
 
