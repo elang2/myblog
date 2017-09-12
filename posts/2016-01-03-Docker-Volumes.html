@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Docker Volumes</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">Jan 03, 2016</span>
+									<h3>Docker Volumes</h3>
+					
+								</header>
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/docker/docker.png" style="width: 70%; height: 70%"></img>
+	</figure>
+</div>
+
+
+<h4>How Docker Works ON OSX</h4>
+
+<p>On a Linux installation Docker runs directly on the host but on MAC OSX it runs in a slightly different manner. Instead of running directly on the host, docker runs on a small light weight scaled down Linux virtual machine named 'default'.  The docker daemon is running on the linux VM and you use the docker client to connect to it.</p>
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/docker/mac_docker_host.svg" style="width: 70%; height: 70%"></img>
+	</figure>
+</div>
+
+
+<p>If you execute the following command in the shell you will see that the IP address returned is different from the HOST machine.</p>
+
+<pre>
+<code>
+$docker-machine ip default
+190.121.110.2
+</code>
+</pre>
+
+
+
+<h4>Overview of Volumes in OSX</h4>
+
+
+<p>1. Virtual Box APP is installed on OSX.</p>
+<p>2. Boot2Docker is launched in a virtual machine named 'default' on VirtualBox.</p>
+<p>3. "docker run" command run the docker image in a container on the "default" VM.</p>
+
+
+<h5>Volume Mounting :</h5>
+
+<p>A directory present on the OSX (host machine) is first mounted to a directory of the same name(need not be of the same name) on the VM.
+This ensures access of the host(OSX) directory contents to the guest OS (boot2docker 'default' VM). 
+Now when the "docker run" command is executed with the volume parameters, it is the "directory" on the guest OS (boot2docker 'default' VM ) which gets mounted onto the container.
+</p>  
+   
+
+
+<figure class="center">
+<img src="../images/docker/docker-shared.png" style="width: 70%; height: 70%"></img>
+</figure>
+
+
+Example with different directory names:
+
+
+<div align="center">
+<figure class="center">
+<img src="../images/docker/docker-shared-2.png" style="width: 70%; height: 70%"></img>
+</figure>
+</div>
+
+
+<h3>Volumes in OSX</h3>
+
+<p>Containers are nothing but images with a read-write layer on top of it. This read-write layer enables the process running in the container to read and write files during its run. Once the container exist, the data written to the file system is removed.</p>
+
+<p>Volumes help bring in data persistence to containers. Data stored in volumes are persisted even after the container has exited. Volumes are nothing but a directory present on the HOST machine which is mounted to the container. Any information that the container writes to this mounted directory or in this case called VOLUME, persists independent of the container lifecycle.</p>
+
+
+<p>Below is an example of how to mount volume while starting the container.</p>
+
+<p>The -v command param is asking docker to make the 'docker-shared' directory present in the current location and expose it as 'mounted-volume' at root location of container VM.</p>
+
+<pre>
+<code>
+docker run -v ./docker-volume:/mounted-volume --name=docker-volume-demo my-image
+</code>
+</pre>
+
+
+<p>This would be a straightforward task in Linux installations but in OSX, since Docker is running on a Linux VM, we would have to create a mount pipe between the HOST and container through the Linux VM.</p>
+
+
+<h4>Steps(With VitualBox as provider) :</h4>
+
+<p>1 . Open up the Virtualbox UI and find the 'default' machine.</p>
+
+<p>2 . Click on 'Shared folders'.</p>
+
+<p>3 . Add a new shared folder. Set "Folder Path" to a directory on OSX that you would like to use as Volume. Provide a name for the folder.
+    In this example, I have provided "docker-shared" as the name for the folder.</p>
+
+<p>4 . Enable 'Auto Mount' and 'Make Permanent'.</p>
+
+<div align="center">
+<figure class="center">
+<img src="../images/docker/vbox-shared.png" style="width: 70%; height: 70%"></img>
+</figure>
+</div>
+
+
+<p>5 . Log into the running 'default' machine using the following command. This should log you into the 'default' Linux VM's shell.</p>
+
+<pre>
+<code>
+$docker-machine ssh default
+</code>
+</pre>
+
+<p>
+Note: Make sure that the boot2docker[default virtual machine (vm)] is already running.
+
+Use the following command or start the "default" VM via the VirtualBox application.
+</p>
+<pre>
+<code>
+$ VBoxManage start default
+</code>
+</pre>
+
+<p>Ensure the terminal connects to the docker boot2dock virtual machine</p>
+
+<pre>
+<code>
+$ eval "$(docker-machine env default)"
+</code>
+</pre>
+
+
+<p>6 . Execute the following command and note down the GID and UID values.</p>
+
+
+<pre>
+<code>
+docker@default:~$ id
+uid=1000(docker) gid=50(staff) groups=50(staff),100(docker)
+</code>
+</pre>
+
+<p>7 . Create a directory named 'docker-shared' on the Linux VM</p>
+
+
+<pre>
+<code>
+docker@default:~$ mkdir docker-shared
+</code>
+</pre>
+
+<p>8 . Execute the following command to mount the host directory previously shared to the VM</p>
+
+<pre>
+<code>
+Syntax : sudo mount -t vboxsf -o defaults,uid=&lt;uid&gt;,gid=&lt;gid&gt; &lt;mount_name&gt; &lt;local_dir&gt;
+
+&lt;local_dir&gt; Is the name of the directory created on the "default" VM.
+&lt;mount_name&gt; Is the folder name provided in the shared folder settings of the VM.
+
+</code>
+</pre>
+
+ 
+ 
+<pre>
+<code>
+docker@default:~$ sudo mount -t vboxsf -o defaults,uid=1000,gid=50 docker-shared docker-shared
+</code>
+</pre>
+
+<p>9 . Exit out of the Linux VM default machine.</p>
+
+<pre>
+<code>
+docker@default:~$ exit
+</code>
+</pre>
+
+<p>10 . Run the container with the following command.</p>
+
+<pre>
+<code>
+$docker run -v ./docker-shared:/docker-shared --name=docker-volume-demo my-image
+</code>
+</pre>
+
+
+<p>11 . View the mounted-volume.</p>
+
+
+<pre>
+<code>
+root@3af1249144e1:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  mounted-volume  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@3af1249144e1:/# cd docke-shared
+root@3af1249144e1:/docker-shared# ls
+root@3af1249144e1:/docker-shared# mkdir testdir
+root@3af1249144e1:/docker-shared# ls
+testdir
+</code>
+</pre>
+
+
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
