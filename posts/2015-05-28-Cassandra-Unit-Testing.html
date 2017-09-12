@@ -50,9 +50,16 @@
 									<h1>Cassandra Unit Testing</h1>
 								</header>
 
-Cassandra Unit provides a library which sprins off an embedded Cassandra server for testing against.
+Cassandra Unit is a library which can integrate with your Java application and help dynamically spin up an embedded Cassandra instances when needed.
+Not only can the Cassandra instance be started and stopped programatically, but you can also bootstrap the cluster by providing DML and DDL CQL(cassandra query language) commands in a
+file to prepare the instance for any sort of unit testing.  
 
-This is very useful for performing Unit/Integration testing of code related to Cassandra.
+What purpose does this library serve ?
+
+1. Biggest advantage is in <b>Unit</b> and <b>Integration</b> testing. Developers or CI/CD tools no longer need to depend on a centralized database.
+2. Developers can run all kinds of test scenarios on their code and also test you their DML/DDL queries before executing them on main Cassandra Cluster. Which means faster development, reduced latency and dependency.
+3. Encourages test driven development of database interacting functionalities.
+
 
 <br/><br/>
 <h4>Steps for Spring JUnit :</h4>
@@ -104,7 +111,15 @@ DependencyInjectionTestExecutionListener.class })
 
 <h5>Step #3</h5>
 
-Place your table creating queries in a file named 'create-table.cql' under /resource folder of your TEST and the run the unit test.
+Place your DDL/DML CQL queries in a file named 'create-table.cql' under /resource folder of your TEST and the run the unit test.
+
+</br></br>
+
+<h4>Additional Information</h4>
+
+<a href="https://github.com/Netflix/CassJMeter" >Jmeter plugin for Cassandra </a> developed by Netflix can be used to create load test scripts
+for Cassandra. This plugin for JMeter allow one to define and execute CQL commands on a Cassandra cluster directly from JMeter.
+
 
 
 							</section>
