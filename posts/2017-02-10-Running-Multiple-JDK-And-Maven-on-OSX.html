@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Running multiple JDK & Maven on OSX</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">Feb 10, 2017</span>
+									<h3>Running multiple JDK & Maven on OSX</h3>
+								</header>
+
+
+<p>If you are a Java developer working on MicroServices then its highly probable that you will be dealing with older services which are written on
+JDK 1.7 or older with Maven 2.x and newer services written in JDK 1.8 and Maven 3.x.</p>
+
+<p>In order to work on both the newer and older services, you would need to have all of Maven 2.x, Maven 3.x , JDK 1.8, JDK 1.7 installed on 
+you OSX.</p> 
+
+<p>Even though you have multiple versions installed, you system environment variables can point to only one of the version.</p> 
+
+<p>However, you can use the following script to easily switch between different version on same of different terminal window.</p>
+
+<h3>Create File</h3> 
+
+<pre><code>
+vi ~/.bash_profile
+</code></pre>  
+
+
+<h3>Enter contents</h3>
+
+<pre><code>
+
+export MAVEN_HOME=/Users/esrinivasan/develop/maven
+
+export PATH=$PATH:$MAVEN_HOME/bin
+
+export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+setjdk() {
+  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
+}
+
+
+setmaven(){
+    tmp="$PWD"
+    cd /Users/esrinivasan/develop
+    rm maven
+    ln -s /Users/esrinivasan/develop/apache-maven-$1 maven
+    cd "$tmp"
+}
+
+</code></pre>    
+
+
+<h3>Usage</h3>
+
+<pre><code>
+esrinivasan:localhost$ <b>setjdk 1.7</b>
+esrinivasan:localhost$ <b>setmaven 3.3.3</b>
+</code></pre>  
+
+
+<h3>Output</h3>
+
+
+<pre><code>
+esrinivasan:localhost$ <b>mvn -version</b>
+Listening for transport dt_socket at address: 8453
+Apache Maven 3.3.3 (7994120775791599e205a5524ec3e0dfe41d4a06; 2015-04-22T04:57:37-07:00)
+Maven home: /Users/esrinivasan/develop/maven
+Java version: 1.7.0_79, vendor: Oracle Corporation
+Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
+</code></pre>   
+
+
+<h3>Note</h3>
+
+<p>1. There are two different version of maven installed in two different locations :</p>
+
+<pre><code>
+	/Users/esrinivasan/develop/apache-maven-2.2.1
+	/Users/esrinivasan/develop/apache-maven-3.3.3
+</code></pre>   
+	
+<p>2. There are two version of JDK installed  (1.7 and 1.8).</p>
+
+
+<p>Note: esrinivasan is my machine name. You can replace it with whatever path you have on your machine.</p>
+
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
