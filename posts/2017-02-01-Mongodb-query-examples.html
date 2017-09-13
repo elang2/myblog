@@ -1,0 +1,431 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>MongoDB Query Examples</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">Feb 01, 2017</span>
+									<h3>MongoDB Query Examples</h3>
+								</header>
+
+
+
+<p>In this blog I will focus on explain how to perform common operations on a given collection in MongoDB.</p>
+
+<p>Let consider a scenario where we have a messaging APP. An user can communicate with one or more users through the application and the system will
+track all the communication in MongoDB.</p>
+
+<div align="center">
+<figure class="half center">
+	<img src="../images/mongo/messaging.png" style="width: 70%; height: 70%"></img>
+</figure>
+</div>
+
+Let consider a scenario where we have a messaging APP. An user can communicate with one or more users through the application and the system will
+track all the communication in MongoDB.
+
+<div align="center">
+<figure class="half center">
+	<img src="../images/mongo/messaging-design.png" style="width: 70%; height: 70%"></img>
+</figure>
+</div>
+
+
+<p>We have a collection named "messages" in MongoDB. Below is a sample documents that are stored in the collection:</p>
+
+
+
+<pre><code>
+
+{
+	"_id": "582a15149bbc2d2f8898628b",
+	"senderUserId": 1234,
+	"receiverUserId": 7890,
+	"message": Hi, How are you?,
+	"sentDate": ISODate("2016-11-14T19:48:36.379Z"),
+	"read": false
+},
+{
+	"_id": "722a15149bbc4d2f8898628b",
+	"senderUserId": 7890,
+	"receiverUserId": 1234,
+	"message": "I am doing well. How about you?",
+	"sentDate": ISODate("2016-11-15T2:10:11.123Z")
+	"read": true
+}, {
+	"_id": "150000149bb42d2f8898628b",
+	"senderUserId": 5678,
+	"receiverUserId": 2222,
+	"message": "Hola !!!",
+	"sentDate": ISODate("2016-11-17T01:04:6.079Z"),
+	"read" : false
+	
+}
+
+</code></pre>
+
+
+
+<hr>
+
+<h4>Query #1 - Create document (User sends a message to another)</h4>
+
+
+<pre><code>
+db.getCollection('messages').insertOne({
+	"_id": "582a15149bbc2d2f8898628b",
+	"senderUserId": "1234",
+	"receiverUserId": "7890",
+	"message": "Hi, How are you?",
+	"sentDate": ISODate("2016-11-14T19:48:36.379Z"),
+	"read": false
+})
+</code></pre>
+
+<hr>
+<h4>Query #2 - Message history between two users with the most recent message at the bottom</h4> 
+
+<pre><code>
+db.getCollection('messages').find({
+	$or: [{
+		senderUserId: 1234,
+		receiverUserId: 7890
+	}, {
+		senderUserId: 7890,
+		receiverUserId: 1234
+	}]
+}).sort({
+	sentDate: 1
+})
+</code></pre>
+
+
+<hr>
+<h4>Query #3 - Retrieve all messages received by an user from other users and which are still unread by the receiving user</h4>
+
+
+<pre><code>
+
+db.getCollection('messages').find({
+	receiverUserId: 1234,
+	read: false
+}).sort({
+	sentDate: 1
+})
+
+</code></pre>
+
+
+ 
+<h4>Query #4 - Retrieve all messages sent by an user to other users</h4>
+
+ 
+<pre><code>
+
+db.getCollection('messages').find({
+	senderUserId: 1234,
+}).sort({
+	sentDate: 1
+})
+
+</code></pre>
+
+<hr/>
+
+<h4>Query #5 - Retrieve count of all messages sent by the user till date</h4>
+
+ 
+<pre><code>
+
+db.getCollection('messages').find({
+	senderUserId: 1234,
+}).count()
+
+</code></pre>
+
+<hr/>
+
+<h4>Query #6 - Retrieve grouped count of unread messages per contact</h4>
+
+
+ <figure class="half center">
+	<img src="/images/mongo/aggregated-count.png" height="800px"></img>
+</figure>
+ 
+
+<pre><code>
+db.getCollection('messages').aggregate([{
+		$match: {
+			receiverUserId: 1234
+		}
+	},
+	{
+		$group: {
+			_id: "$senderUserId",
+			count: {
+				$sum: 1
+			}
+		}
+	}
+
+])
+
+</code></pre>
+
+
+The only problem with the above query is that the order of the result is not guaranteed. We want the results to contain the results where 
+the contact with the most recent communication comes at the top.
+In order to achieve this order, we need to sort the result in descending order of 'sendDate' field.
+The contact is nothing but the sender.
+
+
+The above query can be rewritten as following :
+
+<pre><code>
+
+db.getCollection('messages').aggregate([{
+		$match: {
+			receiverUserId: 1234
+		}
+	},
+	{
+		$sort: {
+			sentDate: -1
+		}
+	}, {
+		$group: {
+			_id: "$senderUserId",
+			count: {
+				$sum: 1
+			},
+			sentDate: {
+				$first: "$sentDate"
+			}
+		}
+	}
+	,
+	{
+		$sort: {
+			sentDate: -1
+		}
+	}, {
+		$project: {
+			_id: 1,
+			count: 1
+		}
+	}
+])
+
+</code></pre>
+
+<hr/>
+
+<h4>Query #7: Get a unique list of Ids of all people that the user sent messages to</h4> 
+
+
+<pre><code>
+
+db.getCollection('messages').aggregate([{
+		$match: {
+			senderUserId: 1234
+		}
+	}, {
+		$group: {
+			"_id": "$receiverUserId"
+		}
+	}, {
+		$project: {
+			"receiverUserId": "$_id",
+			"_id": 0
+		}
+	}
+
+]);
+
+</code></pre>
+
+
+<hr/>
+
+<h4>Query #7: Count of messages sent by the user to each of the contacts</h4> 
+
+
+<pre><code>
+
+db.getCollection('messages').aggregate([{
+		$match: {
+			senderUserId: 1234
+		}
+	}, {
+		$group: {
+			"_id": "$receiverUserId",
+			count: {
+				$sum: 1
+			}
+		}
+	},
+	{
+		$project: {
+			"receiverUserId": "$_id",
+			"_id": 0,
+			count: 1
+		}
+	}
+]);
+
+</code></pre>
+
+
+<hr/>
+
+<h4>Query #8: Get paginated list of messages sent between an user and another user [ Pagination Approach #1 : Using pageSize and pageNum ]</h4>
+
+
+<pre><code>
+
+
+db.getCollection('messages').find({
+	senderUserId: 1234,
+	receiverUserId: 7890
+}).sort({sentDate:-1}).skip(0).limit(10)       // Fetch the first page of the paginated messages. Each page will have 10 messages
+
+
+db.getCollection('messages').find({
+	senderUserId: 1234,
+	receiverUserId: 7890
+}).sort({sentDate:-1}).skip(10).limit(10)       // Fetch the second page of the paginated messages.
+
+
+
+General format :
+
+db.getCollection('messages').find({
+	senderUserId: 1234,
+	receiverUserId: 7890
+}).sort({sentDate:-1}).skip(pageNum-1 * pageSize ).limit(pageSize)       // General format for fetching messages
+
+
+
+
+</code></pre>
+
+
+
+<hr/>
+
+<h4>Query #9: Get list of messages sent between an user and another match  [Pagination Approach #2 : Range based pagination]</h4>
+
+<pre><code>
+
+// Fetch 10 messages that were exchanged between the users before the provided time frame.
+
+db.getCollection('messages').find({
+	senderUserId: 1234,
+	receiverUserId: 7890,
+	sentDate: {
+		$lt: ISODate("2016-11-14T19:48:36.379Z")
+	}
+}).sort({
+	sentDate: -1
+}).limit(10)
+
+
+
+// Fetch 10 messages that were exchanged between the users after the provided time frame.
+
+db.getCollection('messages').find({
+	senderUserId: 1234,
+	receiverUserId: 7890,
+	sentDate: {
+		$gt: ISODate("2016-11-14T19:48:36.379Z")
+	}
+}).sort({
+	sentDate: 1
+}).limit(10)
+
+
+
+
+</code></pre>
+
+
+
+<h4>Query #10: Update messages received by an an user from another user as read.</h4>
+
+<pre><code>
+db.getCollection('messages').update({
+	receiverUserId: 1234,
+	senderUserId: 7890,
+	read: false
+}, {
+	$set: {
+		read: true
+	}
+}, {
+	multi: true
+})
+
+</code></pre>
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>

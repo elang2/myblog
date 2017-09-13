@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Implementing CHAT system with MongoDB Atlas</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">Feb 02, 2017</span>
+									<h3>Implementing CHAT system with MongoDB Atlas</h3>
+								</header>
+
+
+<p>
+A CHAT system essentially lets one user send messages to and receive messages from other users. The messages are usually text based but the chat system should be able to support different media types like Videos, Audio, images etc.
+
+In the following article I will concentrate on data storage aspect of the CHAT system. I will explain the various considerations behind choosing the current date store.  
+
+</p>
+
+<h3>Choosing A Data Store</h3>
+<p>
+This is what we wanted from the storage aspects of the system :
+
+<ul>
+<li>1. To move away from RDBMS.</li>
+	
+<li>2. Move towards a NoSQL solution with - 
+	<ul>
+	<li>a. Flexible schema.</li>
+	<li>b. Horizontally scalable to meet increased load.</li>
+	<li>c. High performance.</li>
+	</ul>
+</li>
+	
+<li>3. Easy maintenance.</li>
+
+<li>4. Resilient and quick recovery.</li>
+
+<li>5. Monitoring.</li>
+</ul>
+
+<p>
+RDBMS with their normalized storage structure, licensing cost and transactional, locking feature did not seem to fit into our idea of a solution with can support large DB ops/sec with minimum latency.
+
+Flexible schema helps with evolving requirements and new features. Data store maintenence like backup, restore , scaling up etc. should not be a ton of work.
+</p>
+
+<h3>What We Choose:</h3>
+
+<div align="center">
+<figure class="half center">
+<img src="../images/mongo/mongo-db-logo.png" style="width: 70%; height: 70%"></img>
+</figure>
+</div>
+  
+  
+<p><b>MongoDB Atlas</b> - A software-as-a-solution version of the well known popular document based NoSQL database.</p>
+
+
+<h3>Why We Choose MongoDB Atlas:</h3>
+
+<ul>
+<li>1. Hosted service. No upfront investment in hardwares or need to have a NoSQL DB Administrator to setup the cluster.</li>
+
+<li>2. Document based storage with support for social media features like tags, likes, comments etc.</li>
+
+<li>3. Ability to easily scale up or across by either increasing the machine configuration or by adding additional shards.</li>
+
+<li>4. Data locality supports fast data retrival and storage.</li>
+
+<li>5. Automated backup, data snapshotting and one click restore.</li>
+
+<li>6. High availability with automated failover and recovery.</li>
+
+<li>7. Automated minor version upgrade of the MonogDB cluster.</li>
+
+<li>8. One click upgrade for major versions.</li>
+
+<li>9. Dashboards visually representing various system and database level metrics. These metrics are archived to provide a historical overview.</li>
+ 
+<li>10. Alerting based on system and database level metrics.</li>
+
+<li>11. Alerting integration with other third part tools like SLACK and Pagerduty.</li>
+
+<li>12. Access to MongoDB enterprise support.</li>
+
+<li>13. Cluster security using TLS/SSL Encryption, authentication, authorization, IP whitelisting etc.</li>
+
+<li>14. Pay as you go model.</li>
+</ul>
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Hystrix</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">Feb 25, 2017</span>
+									<h3>Hystrix</h3>
+								</header>
+
+<p>Microservice architecture brings in a lot flexibility with application development and deployment but introduces a new level complexity when it comes to handling transactions and inter-service communication.</p> 
+
+<p>The whole microservices architecture is like a huge web consisting of several services each talking to one or more of other services.</p>   
+
+<div align="center">
+<figure class="center half">
+	<img src="../images/microservice/microservice-architecture.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b>News feed events aggregation service</b></figcaption>
+</figure>
+</div>
+
+
+<p>Each service has its own performance and reliability as Service Level Agreement (SLA) which in turn may be affected by the performance of a dependent services.</p> 
+
+<p>A front facing service could be held hostage if one or more of services it is dependent are unable to meet their SLA's. This in turn would impact the SLA of the service and could end up providing a bad user experience for the users of the service.</p>
+
+<p>It's not just one API call or one user that we are talking about, it could be most it not all of the API calls that are coming to the service for different users.</p>  
+
+<div align="center">
+<figure class="center">
+	<img src="../images/hystrix/hystrix-slow.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b></b></figcaption>
+</figure>
+</div>
+
+
+<p>This is where the 'Circuit Breaker' design pattern comes into picture. The design pattern is similar to how an electrical circuit breaker works. The idea is to trip the circuit when when something bad happens thus preventing the issue from escalating and turning into a disaster.</p>
+
+<p>The below diagram illustrates the design pattern as explained by 'Martin Fowler' in 'Application Architecture'.</p>
+
+<div align="center">
+<figure class="center half">
+	<img src="../images/hystrix/martin-fowler.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b></b></figcaption>
+</figure>
+</div>
+
+
+
+
+<h3>Key Parameters Affecting API SLAs in a MicroService Architecture:</h3> 
+
+<pre><code>
+1. Connection Timeouts
+	
+   Happens when the client is unable to connect to a service within a given timeframe. This may be caused due to a slow or unresponsive service.
+   
+   
+
+2. Read Timeouts
+
+   When the client is unable to read the results from the service within a given timeframe. The service may be doing a lot of computation or is using some inefficient way to prepare data to be returned.
+	
+
+3. Exception Caused Due To
+
+   
+*   Bad data sent to the service by the client
+   
+* 	Service being down
+   
+* 	Issue on the service
+   
+*	Issue on the client while parsing the response. Response change on the service and the client unaware of it.  
+ 
+</code></pre>
+
+<h3>Building Resilient Service</h3>
+
+
+<p>Netflix has built <a href="https://github.com/Netflix/Hystrix">Hystrix</a>, a library which implements the circuit breaker pattern. This library will help us build resilient services.</p>  
+  
+
+<h3>Key advantages of Circuit Breaker Pattern:</h3>
+
+<pre><code>
+* Fail fast and rapid recovery.
+* Prevent cascading failure.
+* Fallback and gracefully degrade when possible.
+</code></pre>
+
+
+<h3>Hystrix library:</h3>
+
+<pre><code>
+* Implements the circuit breaker pattern.
+* Provides near real time monitoring via. Hystrix stream and Hystrix dashboard.
+* Generates monitoring events which can be published to external systems like Graphite.
+</code></pre>   
+
+
+</hr>
+
+<h3>Use Case: NewsFeed Aggregation Service</h3>
+
+<h3>Overview:</h3>
+
+<p>NewsFeed Aggregation service is responsible to deliver data which will be used to render the 'Recent Activities' section of the page for an user. Recent activities is similar to facebook timeline which contains any updates/notification/activities that happened between the time the user was last on the site and now.</p> 
+
+
+<div align ="center">
+<figure class="center">
+	<img src="../images/hystrix/hystrix-overview.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b>News feed events aggregation service</b></figcaption>
+</figure>
+</div>
+
+<p>The aggregation service is dependent on 3 other microservices. News Feed service being the primary source of feed whose data is further enriched based on the information retrieved from user-service and photo-service.</p>
+
+<p>The feed is shown on the landing page of the application and acts as a driver for user engagement on the site. Hence, it is of utmost importance that the operation to fetch the required new feed data is fast and reliable.</p> 
+
+<p>We neither want the user to see a long 'loading...' animation or see no data at all since. The backend services need to be highly resilient.</p>
+
+
+<h3>Application Flow Diagram: Before Integrating With Hystrix</h3>
+
+<h3>Here's a flow diagram indicating how the user feed is fetched and enriched. The Newsfeed Aggregation service has three clients, each talking to different services (news feed, user and photo service).</h3>
+
+<div align="center">
+<figure class="center">
+	<img src="../images/hystrix/h1.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b>Application flow without Hystrix</b></figcaption>
+</figure>
+</div>
+
+<p>
+Each client has a certain 'Read Time Out' and 'Connect Time Out' associated with it.
+Let's assume these are configured to be 3 seconds each. So, if dependent services don't respond back in 3s or if the calling service is unable to establish a connection within 3 seconds, a read or connect timeout exception is thrown by the client.
+</p>
+
+<p>In the happy path scenario, everything will work as usual and the dependent service will return data within some miliseconds. The application is able to retrieve the feed and return it to the user.
+</p>
+
+<p>However, if one of the dependent services go down then every user will see at least a 3 seconds increase in the response time to return partial data or no data at all. The page will be slower and user experience not so good.</p>
+
+
+<br/>
+
+<h3>Application Flow Diagram: After Integrating With Hystrix</h3>
+
+<div align="center">
+<figure class="center full">
+	<img src="../images/hystrix/h-2.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b>Application flow without Hystrix integrated</b></figcaption>
+</figure>
+</div>
+
+
+<p>Using the Hystrix library, we can have the service execute a fallback operation when a certain threshold of failure rate for talking to an external service is reached. This is essentially a state where the circuit is considered open. As soon as the circuit is open, the service only executes the fallback operation and avoids reaching out to the external service for a certain cooldown period. Thus, saving the expensive 3 second timeout period for each API call to the external service.</p>
+
+<p>After the cool down period, Hystrix will allow one request to go out to the external service, if this succeeds then the circuit will be closed again and all subsequent calls will reach out to the external service until the threshold for failure is reached next time.</p>  
+ 
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>

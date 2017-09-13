@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>MongoDB Atlas</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">Devember 19, 2016</span>
+									<h3>MongoDB Atlas</h3>
+								</header>
+
+
+<h3>What is Mongo Atlas ?</h3>
+
+<p>Mongo Atlas is the cloud hosted version of MongoDB. This is the software-as-a-service flavor of the NoSQL database.</p> 
+
+
+<h3>Why MongoDB Atlas ?</h3>
+
+<p>Since this is the software as a service and is hosted on the cloud it has several advantages over the on-premise hosted version:</p>
+
+<ul>
+<li>1. Easy and quick ( in around 10-15 mins) to setup a production standard single replica set or sharded cluster of MongoDB.</li>
+
+<li>2. Highly reliable cluster. The cluster is deployed on AWS (Amazon Web Service). Each member of the replica set is deployed on a different availability zone and thus providing a higher degree of fault tolerance for a particular replica set.</li>
+
+<li>2. No need to have a NoSQl database management expertise. </li>
+
+<li>3. Provides users the ability to configure backups of the database and also restore the data from backup when necessary.</li>
+
+<li>4. Automated handling of failure scenarios. If the primary node goes down then Atlas automatically handles election of a new primary and recovery of the broken node.</li>
+
+<li>5. Tracks various system level and database level metrics. These metrics are represented as graphs for users to drill down for a particular time frame and granularity.</li>
+
+<li>6. Setup alerts based on different metrics and custom user set thresholds.</li>
+
+<li>7. Pay as you go pricing. The pricing is dependent on your usage and the configuration you choose. This gives flexibility to organizations based on their use cases and financial capabilities.</li>
+
+</ul>
+<h3>Setting up a cluster</h3>
+
+
+<p>Once you have registered and created an account. You will be presented with a form where you can choose your desired configuration for the database.</p>
+
+<p>The pricing displayed in the screenshots below are for the base minimum configuration. The price varies based on the choices you make for the below parameters.</p>
+
+
+<h3>To quickly give an overview of the choices you have</h3> 
+
+<ul>
+<li>1. The DB engine (3.2v WiredTiger or 3.4v WiredTiger). The older engine MMAP(memory mapped) is not supported in MongoDB Atlas.</li>
+<li>2. Right now the hosting is available only in the Oregon region of AWS.</li>
+<li>3. The size of the instances on which to host the database. The instances need to be homogeneous. Different instances have different memory and CPU However, the storage can be configured as desired.</li>
+<li>4. Replication factor. Number of replica in a replica set. </li>
+<li>5. Whether to setup a single replica set stand-alone cluster or a sharded cluster.</li>
+<li>6. If the backup needs to be enabled or not.</li>
+</ul>
+
+<div align="center">
+<figure class="center">
+	<img src="../images/atlas/cluster-1.png" style="width: 70%; height: 70%" ></img>
+	<figcaption><b>Fig 1: Select Your Region</b></figcaption>
+</figure>
+
+<hr>
+
+<figure class="center">
+	<img src="../images/atlas/cluster-2.png" style="width: 70%; height: 70%" ></img>
+	<figcaption><b>Fig 2: Choose Instance Configuration</b></figcaption>
+</figure>
+
+<hr>
+<figure class="center">
+	<img src="../images/atlas/cluster-3.png" style="width: 70%; height: 70%" ></img>
+	<figcaption><b>Fig 3: Choose Cluster Configuration</b></figcaption>
+</figure>
+ </div>
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>

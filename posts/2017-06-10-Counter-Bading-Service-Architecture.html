@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Counter-Badging Service Architecture</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">July 10, 2017</span>
+									<h3>Counter-Badging Service Architecture</h3>
+								</header>
+
+
+<p>Most of the applications have some sort of badging functionality which is used to display certain counts to the users for CTA (Call To Action).</p>
+
+<p>Once the user has clicked or acknowledged the counter then the value associated with the counter will be reset.</p>
+
+<p>Given a system with large number of users and working off a large data set, it's not always possible to compute the counter values in real time.
+Also, it may not make sense to update multiple records for different users when the counters are acknowledged.</p>
+
+<p>There are three actions associated with the counters</p>
+
+<ul>
+<li>1. Increment</li>
+<li>2. Decrement   - This usually happens when an action is undone or something is deleted.</li>
+<li>3. Reset       - When user acknowledges the counter.</li>
+</ul>
+
+
+<p>All the above actions could happen concurrently and be associated with an user. For this reason, all the operations on the counter needs to be atomic else the counters would be off the correct value.</p>
+
+<p>A common example for the badging/counter feature is the <b>Facebook</b> notification system.</p>
+
+<p>The counters associated with the user are based on the actions performed by other users.</p> 
+
+<p>An user can be associated with several other users and many of those other users could be performing the same or different actions at the same time. 
+Like, there could be 3 people sending the user messages or another 4 people sending friend requests.</p> 
+
+<div align="center">
+<figure class="center half">
+	<img src="../images/badging/fb-notifications.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b>Facebook Notifications</b></figcaption>
+</figure>
+</div>
+
+<p>Given the above behavior of the system, the badging system can be architectured as below. The system would be event driven and the counter values eventually consistent.</p>
+
+<p>Each microservice would generate events which gets listened by an events processor service. Based on the data in the event, the processor will update the
+value of counters associated with the user.</p>
+
+<div align="center">
+<figure class="center">
+	<img src="../images/badging/badging-architecture.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b>Simple Badging/Counter Service Architecture</b></figcaption>
+</figure>
+</div>
+
+
+<p>Here is a simple example of the REDIS HASH data structure which can be used to store the counters associated with the user.
+Each HASH is associated with a userId and all the counters are tied to the hash as key-value pairs. </p>
+
+<div align="center">
+<figure class="center">
+	<img src="../images/badging/badging-redis-structure.png" style="width: 70%; height: 70%"></img>
+	<figcaption><b>Bading Redis Structure</b></figcaption>
+</figure>
+</div>
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>

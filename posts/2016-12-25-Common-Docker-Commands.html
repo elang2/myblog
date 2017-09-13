@@ -1,0 +1,203 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Common Docker Commands</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">December 25, 2016</span>
+									<h3>Common Docker Commands</h3>
+								</header>
+
+<p>Some useful commonly used docker commands when working on OSX with VirtualBox.</p>
+
+<p>1) This ensures the boot2docker VM is up and running.</p>
+<pre><code>
+docker-machine start default
+</code></pre>
+
+<hr>
+<br/>
+
+<p>2) This is the command that needs to be executed once for every new terminal window opened, so as to establish connection with the boot2docker vm.</p> 
+
+<pre><code>
+ eval “$(docker-machine env defaut)”
+</code></pre>
+	
+<hr>
+<br/>
+
+<p>3) This command returns the IP address of the 'default' VM running boot2docker</p>
+
+<pre><code>
+docker-machine ip default
+</code></pre>
+
+<hr>
+<br/>
+
+<p>4) Returns a list of VM with boot2docker install and running on VirtualBox.</p>
+
+<pre><code>
+docker-machine ls
+
+Sample Output:
+
+NAME        ACTIVE   DRIVER       STATE     URL                         SWARM   ERRORS
+default     *        virtualbox   Running   tcp://192.168.99.100:2376           
+
+</code></pre>
+
+<hr>
+<br/>
+
+<p>5) Regenerates the TLS certificates needed to communicated with the 'boot2docker' VM.</p>  
+
+<pre><code>
+docker-machine regenerate-certs default     /// To regenerate the TLS certs for docker
+</code></pre>
+
+<hr>
+<br/>
+
+<p>6) Lists all available docker images</p> 
+
+<pre><code>
+ docker images
+</code></pre>
+
+<hr>
+<br/>
+
+<p>7) Looks the docker process running with a particular container id.<p>
+
+<pre><code>
+docker ps -a | grep <container -id >
+</code></pre>
+
+<hr>
+<br/>
+
+<p>8) Removes a running docker container</p> 
+
+<pre><code>
+docker rm <container id>
+</code></pre>
+
+<hr>
+<br/>
+
+<p>9) Removes a particular docker image</p>
+
+<pre><code>
+docker rmi  <imageid>
+</code></pre>
+
+<hr>
+<br/>
+
+<p>10) Kills a particular docker container</p>
+
+<pre><code>
+docker kill <container-id>
+</code></pre>
+
+<hr>
+<br/>
+ 
+<p>11) Connects to the docker container and gives access to the bash shell to execute commands on the container</p> 
+
+<pre><code>
+docker exec -i -t <container id> /bin/bash
+</code></pre>
+
+<hr>
+<br/>
+
+<p>12) Runs a docker image and does not automatically terminate the container. Allows an easy way to keep the container running and later connect to the containers shell using "docker exec -it " command.</p>
+
+<pre><code>
+docker run -d <image-name> tail -f /dev/null
+</code></pre>
+
+<hr>
+<br/>
+
+
+<p>13) This is not a docker command. This utility is part of the virtual box installation. Allows one to power-off a VM running on VirtualBox</p>  
+
+<pre><code>
+VBoxManage controlvm <vm-name> poweroff
+</code></pre>
+
+
+<hr>
+<br/>
+
+<p>14) Again, not a docker command. A virtual box command to share a directory on the HOST OS (OSX: /Users/esrinivasan/..) with the guest operating system running on VirtualBox. The name of the shared folder is set as "/eks" here.<p> 
+
+<pre><code>
+VBoxManage sharedfolder add default --name /eks --hostpath /Users/esrinivasan/develop/learning/Docker/dec-2016/docker-node/docker-volume
+</code></pre>
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
