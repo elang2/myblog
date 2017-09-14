@@ -54,34 +54,34 @@
 
 <div align="center">								
 	<figure class="half center">
-	<img src="../images/jvm/visual-vm.png" style="width: 70%; height: 70%"></img>
+	<img src="../images/jvm/visual-vm.png" style="width: 70%; height: 70%" alt="Visual VM for Memory & Performance issue troubleshooting on JVM"></img>
 	</figure>
 </div>
 
 
 
-When it comes to application development, its always better to be a pessimist rather than an optimist. Irrespective of how good a developer you are are, the application will surely run into some unforeseen issues once its running in production environment.
+<p>When it comes to application development, its always better to be a pessimist rather than an optimist. Irrespective of how good a developer you are are, the application will surely run into some unforeseen issues once its running in production environment.</p>
 
-Out of memory exceptions every now and then which requires Tomcat to be restarted or a case of degrading application performance which disappears after server restart but reappears after the application has been running for some time.
+<p>Out of memory exceptions every now and then which requires Tomcat to be restarted or a case of degrading application performance which disappears after server restart but reappears after the application has been running for some time.</p>
 
-Such kind of unpredictable behavior of the application is sure to leave every developer flabbergasted. One standard reply most of them will come back with is that "I am not able to reproduce this on my machine !!! Don't understand what's going on in PROD".  :-)
+<p>Such kind of unpredictable behavior of the application is sure to leave every developer flabbergasted. One standard reply most of them will come back with is that "I am not able to reproduce this on my machine !!! Don't understand what's going on in PROD".  :-)</p>
 
-Such problems are not difficult to isolate but would require the use of the right tools, perseverance and lots of patience.
+<p>Such problems are not difficult to isolate but would require the use of the right tools, perseverance and lots of patience.</p>
 
-In this post, I will explain how to use VisualVm to troubleshoot issues with you application deployed or running or Tomcat.
+<p>In this post, I will explain how to use VisualVm to troubleshoot issues with you application deployed or running or Tomcat.</p>
 
  
  
  
 <h3>Configuration</h3>
 
-Visual VM is a JVM profiling tool built on top of  JDK tools (jstat,JConsole,jStack,jmap,jinfo).
+<p>Visual VM is a JVM profiling tool built on top of  JDK tools (jstat,JConsole,jStack,jmap,jinfo).</p>
 
-It does a nice job of representing the data retrieved using the JDK tools in a nice graphical manner.
+<p>It does a nice job of representing the data retrieved using the JDK tools in a nice graphical manner.</p>
 
-Visual VM allows you to generate and analyze heap dumps for memory leaks, monitor application heap space , garbage collection activity, CPU usage, threads and many more.
+<p>Visual VM allows you to generate and analyze heap dumps for memory leaks, monitor application heap space , garbage collection activity, CPU usage, threads and many more.</p>
 
-The best part is that Visual VM is open source. Its licensed counter part is YourKit.
+<p>The best part is that Visual VM is open source. Its licensed counter part is YourKit.</p>
 
 </br></br>
 <h3>Setting up Visual VM with Apache Tomcat</h3>
@@ -95,13 +95,11 @@ The best part is that Visual VM is open source. Its licensed counter part is You
 	 <i>To do this, edit catalina.bat(Windows)  or catalina.sh(unix)  and add the following line</i>
 	 <pre>
 		 <code>
+<b>Command :</b> 
+
 set "JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=<IP-Address-Of-Tomcat-Host>"
-	 	</code>
-	 </pre>
 
 <b>Explanation</b>
-<pre>
-<code>
 
 com.sun.management.jmxremote.ssl=false
 #This will disable SSL while monitoring remote machines`
@@ -124,18 +122,20 @@ java.rmi.server.hostname
 
 <b>Step 3: Start Visual VM and add the ip address of the host running the tomcat to Visual VM.</b>
 
-
+<br/><br/>
 <div align="center">
 
 <figure class="center">
-<img src="../images/jvm/screenshot-1.png" style="width: 70%; height: 70%"></img>
-<figcaption>Fig 1: Add a remote client</figcaption>
+<img src="../images/jvm/screenshot-1.png" style="width: 70%; height: 70%" alt="Adding a remote client on Visuam VM"></img>
+<figcaption><b>Fig 1: Add a remote client</b></figcaption>
 </figure>
 
+</br>
+</br>
 
 <figure class="center">
-<img src="../images/jvm/screenshot-2.png" style="width: 70%; height: 70%"></img>
-<figcaption>Fig 2: Remote client details</figcaption>
+<img src="../images/jvm/screenshot-2.png" style="width: 70%; height: 70%" alt="Remote client details on VisualVM"></img>
+<figcaption><b>Fig 2: Remote client details</b></figcaption>
 </figure>
 
 </div>
@@ -147,58 +147,64 @@ java.rmi.server.hostname
 
 <h3>Making Sense Of the Data</h3>
 
-Below  is a screenshot of an application which seems to be taking up close to 100% of the CPU and also peaking up the heap space usage.
+<p>Below  is a screenshot of an application which seems to be taking up close to 100% of the CPU and also peaking up the heap space usage.</p>
 
-This is one of the common scenarios that one might encounter in real world. The below graph was collected during a medium load level testing operation that spanned over a period of 20+ minutes.
+<p>This is one of the common scenarios that one might encounter in real world. The below graph was collected during a medium load level testing operation that spanned over a period of 20+ minutes.</p>
 
-If you look at the heap graph(right side) you can see that the heap space kept gradually increasing and also there are some lows now and then. If you compare the low's in the heap graph against the GC activity and CPU usage on the CPU graph(left side), you can see a clear relationship between them.
+<p>If you look at the heap graph(right side) you can see that the heap space kept gradually increasing and also there are some lows now and then. If you compare the low's in the heap graph against the GC activity and CPU usage on the CPU graph(left side), you can see a clear relationship between them.</p>
 
-The lows in the heap graph corresponds to Garbage Collection activity performed by the JVM. Heap goes down when the GC activity increased and at the same time the CPU activity also goes down. This because GC's are stop the world process. When the JVM is performing a major GC it might cause Tomcat to stall and stop handing requests, which in turn will lead to the front-end client seeing additional latencies or errors.
+<p>The lows in the heap graph corresponds to Garbage Collection activity performed by the JVM. Heap goes down when the GC activity increased and at the same time the CPU activity also goes down. This because GC's are stop the world process. When the JVM is performing a major GC it might cause Tomcat to stall and stop handing requests, which in turn will lead to the front-end client seeing additional latencies or errors.</p>
 
-If the heap continues to increase then it will eventually lead of PremGen or OutOfMemory Exception.
-
-
-<div align="center">
-	<figure class="center">
-	<img src="../images/jvm/garbage-collection.png" style="width: 70%; height: 70%"></img>
-	<figcaption>Fig 3: Garbage collection</figcaption>
-	</figure>
-</div>
-
-
-To troubleshoot the memory issue you can take a heap dump of the JVM using the 'Heap Dump' button present on the VisualVM tool. The heap dump is like a snapshot of object in the memory.
-
-The heap dump is usually stored on the machine running the JVM.
+<p>If the heap continues to increase then it will eventually lead of PremGen or OutOfMemory Exception.</p>
 
 
 <div align="center">
 	<figure class="center">
-	<img src="../images/jvm/heapdump1.png" style="width: 70%; height: 70%"></img>
-	<figcaption>Fig 3: Garbage collection</figcaption>
+	<img src="../images/jvm/garbage-collection.png" style="width: 70%; height: 70%" alt="Garbage Collection stas on VisualVM"></img>
+	<figcaption><b>Fig 3: Garbage collection</b></figcaption>
+	</figure>
+</div>
+
+</br>
+
+<p>To troubleshoot the memory issue you can take a heap dump of the JVM using the 'Heap Dump' button present on the VisualVM tool. The heap dump is like a snapshot of object in the memory.</p>
+
+<p>The heap dump is usually stored on the machine running the JVM.</p>
+
+
+<div align="center">
+	<figure class="center">
+	<img src="../images/jvm/heapdump1.png" style="width: 70%; height: 70%" alt="Heap Stats and Dump on VisualVM"></img>
+	<figcaption><b>Fig 3: Garbage collection</b></figcaption>
 	</figure>
 </div>
 
 
-You can use eclipse plugins like 'Eclipse Memory Analyzer' to open the dump and look at what objects are the reason for the memory leak.
+<p>You can use eclipse plugins like 'Eclipse Memory Analyzer' to open the dump and look at what objects are the reason for the memory leak.</p>
 
-Once you have installed the plugin, in eclipse you can go to File-> Open file -> (Select the heap dump .hprof file). The plugin will automatically start analyzing it and render graphs and histograms for you.
+<p>Once you have installed the plugin, in eclipse you can go to File-> Open file -> (Select the heap dump .hprof file). The plugin will automatically start analyzing it and render graphs and histograms for you.</p>
 
-Below is a sample graph. It tells you how the heap space is divided between different objects and also lists what objects and corresponding classes are causing this issue. With this information you can go back to your code and investigate the reason for the objects not being eligible for garbage collection.
+<p>Below is a sample graph. It tells you how the heap space is divided between different objects and also lists what objects and corresponding classes are causing this issue. With this information you can go back to your code and investigate the reason for the objects not being eligible for garbage collection.
+</p>
 
  
+<br/> 
+<br/>
 
 <div align="center">
 	<figure class="center">
-	<img src="../images/jvm/pie.png" style="width: 70%; height: 70%"></img>
-	<figcaption>Fig 4: Memory usage pie chart</figcaption>
+	<img src="../images/jvm/pie.png" style="width: 70%; height: 70%"  alt="Memory usage chart on VisualVM"></img>
+	<figcaption><b>Fig 4: Memory usage pie chart</b></figcaption>
 	</figure>
 </div>
 
+<br/>
+<br/>
 
 <div align="center">
 	<figure class="center">
-	<img src="../images/jvm/histogram.png" style="width: 70%; height: 70%"></img>
-	<figcaption>Fig 5: Objects histogram</figcaption>
+	<img src="../images/jvm/histogram.png" style="width: 70%; height: 70%" alt="Object Histogram"></img>
+	<figcaption><b>Fig 5: Objects histogram</b></figcaption>
 	</figure>
 </div>
 
