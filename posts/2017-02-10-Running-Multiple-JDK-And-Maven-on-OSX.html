@@ -53,21 +53,20 @@
 								</header>
 
 
-<p>If you are a Java developer working on MicroServices then its highly probable that you will be dealing with older services which are written on
-JDK 1.7 or older with Maven 2.x and newer services written in JDK 1.8 and Maven 3.x.</p>
+<p>If you are a Java developer working on MicroServices, it’s very possible that you will be dealing with older services which are written on JDK 1.7(or older) and Maven (2.x).
+The newer services may be written in JDK 1.8 and Maven 3.x.</p>
 
-<p>In order to work on both the newer and older services, you would need to have all of Maven 2.x, Maven 3.x , JDK 1.8, JDK 1.7 installed on 
-you OSX.</p> 
+<p>In order to work on both the new and old services, you would need to have all of Maven 2.x, Maven 3.x , JDK 1.8, JDK 1.7 installed on you OSX.</p> 
 
-<p>Even though you have multiple versions installed, you system environment variables can point to only one of the version.</p> 
+<p>Even though you have multiple versions installed, your system environment variables can point to only one of the versions.</p> 
 
-<p>However, you can use the following script to easily switch between different version on same of different terminal window.</p>
+<p>However, you can use the following script to easily switch between different versions on same or different terminal windows.</p>
 
-<h3>Create File</h3> 
+<h3>Create File</h3> 
 
 <pre><code>
 vi ~/.bash_profile
-</code></pre>  
+</code></pre>  
 
 
 <h3>Enter contents</h3>
@@ -80,19 +79,19 @@ export PATH=$PATH:$MAVEN_HOME/bin
 
 export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
 setjdk() {
-  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
+  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
 }
 
 
 setmaven(){
-    tmp="$PWD"
-    cd /Users/esrinivasan/develop
-    rm maven
-    ln -s /Users/esrinivasan/develop/apache-maven-$1 maven
-    cd "$tmp"
+    tmp="$PWD"
+    cd /Users/esrinivasan/develop
+    rm maven
+    ln -s /Users/esrinivasan/develop/apache-maven-$1 maven
+    cd "$tmp"
 }
 
-</code></pre>    
+</code></pre>    
 
 
 <h3>Usage</h3>
@@ -100,7 +99,7 @@ setmaven(){
 <pre><code>
 esrinivasan:localhost$ <b>setjdk 1.7</b>
 esrinivasan:localhost$ <b>setmaven 3.3.3</b>
-</code></pre>  
+</code></pre>  
 
 
 <h3>Output</h3>
@@ -115,7 +114,7 @@ Java version: 1.7.0_79, vendor: Oracle Corporation
 Java home: /Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/jre
 Default locale: en_US, platform encoding: UTF-8
 OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
-</code></pre>   
+</code></pre>   
 
 
 <h3>Note</h3>
@@ -125,9 +124,9 @@ OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
 <pre><code>
 	/Users/esrinivasan/develop/apache-maven-2.2.1
 	/Users/esrinivasan/develop/apache-maven-3.3.3
-</code></pre>   
+</code></pre>   
 	
-<p>2. There are two version of JDK installed  (1.7 and 1.8).</p>
+<p>2. There are two version of JDK installed  (1.7 and 1.8).</p>
 
 
 <p>Note: esrinivasan is my machine name. You can replace it with whatever path you have on your machine.</p>
@@ -135,6 +134,8 @@ OS name: "mac os x", version: "10.10.5", arch: "x86_64", family: "mac"
 
 
 							</section>
+
+
 
 					</div>
 

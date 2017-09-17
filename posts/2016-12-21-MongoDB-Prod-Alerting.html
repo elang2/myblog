@@ -54,13 +54,13 @@
 
 
 
-<p>Monitoring is a very important aspect of any service. This applies not just to web applications but also to databases and other supporting tools.</p>
+<p>Monitoring is a very important aspect of any service. This applies not just to web applications but also to databases and other supporting tools. </p>
 
-<p>On MonogDB Atlas user will have the ability to setup alerts based on various metrics(Host level, DB level and networking level).</p>
+<p>On MonogDB Atlas user have the ability to setup alerts based on various metrics(Host level, DB level and networking level).</p>
 
 <p>In this blog I will try to highlight some of the alerts which will be very useful for monitoring a production MongoDB cluster on Atlas.</p>
 
-<h3>Setting Up The Alerts:</h3>
+<h3>Setting Up the alerts:</h3>
 
 <ul>
 <li>1. Log into MongoDB Atlas.</li>
@@ -83,12 +83,12 @@
 <p>Here is a sample of some of the alerts setup on MongoDB Atlas. The alerts are set up to go to</p>
 
 <ul>
-<li>1. Group Owner :  The set of users who belong to the group associated with the MongoDb cluster.</li>
-<li>2. Email : Send an email to “mongo.prod.alert@corp.com”</li>
-<li>3. Slack : Atlas has integration with Slack and can sent the alerts to a slack channel.</li>
+<li>1. Group Owner:  The set of users who belong to the group associated with the MongoDB cluster.</li>
+<li>2. Email: Send an email to “mongo.prod.alert@corp.com”</li>
+<li>3. Slack: Atlas has integration with Slack and can sent the alerts to a slack channel.</li>
 </ul>
 
-<p>There are several other integration that can be setup. The other integrations are shown in the above screenshot.</p>
+<p>There are several other integrations that can be setup. The other integrations are shown in the above screenshot. </p>
 
 <p>Escalation level can be configured based on how long the error condition or state lasts. The below screenshot has the alert “Tickets Available: Reads below 20” set up as multi level alerting with escalations to the “prod-alerts-channel” (SLACK) if the error condition lasts more than 10 minutes. The first level of alerting always goes to the “Group Owners” and the email group (mongo.prod.alert@corp.com)</p>
 
@@ -97,10 +97,10 @@
 	<img src="../images/atlas/alerts2.png" style="width: 70%; height: 70%" alt="MongoDB Atlas - Alert Setting"></img>
 </figure>
 </div>
- 
+ 
 <hr>
 </br>
- 
+ 
 
 <h3>Alerts (These are setup at host target level)</h3>
 
@@ -127,8 +127,8 @@
 <h5> 5 Minutes</h5>
 </th>
 <th>
-<h5> In WiredTiger the locks are at a document level. Write heavy databases may see lock % upto 60% where as read heavy databases may not see more than 10%.</h5>
-<h5>Too much document locking will lead to reduced database query performance for write operations since new writes need to wait till the lock on the document is released by the previous write operation.</h5>
+<h5> In WiredTiger the locks are at a document level. Write heavy databases may see lock % upto 60% whereas read heavy databases may not see more than 10%.</h5>
+<h5>Too much document locking will lead to reduced database query performance for write operations since new writes need to wait till the lock on the document is released by the previous write operation. </h5>
 </th>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 <h5>5 Minutes</h5>
 </th>
 <th>
-<h5> 80 % is a good threshold for this. MongoDB caches records in memory for quick retrieval. High I/O utilization may be due to frequent data flush from memory to disk or could be due to large number of cache misses which caused mongo to retrieve the missing documents from the disk. The latter may be due to smaller memory size of the host.</h5>
+<h5> 80 % is a good threshold for this. MongoDB caches records in memory for quick retrieval. High I/O utilization may be due to frequent data flush from memory to disk or could be due to large number of cache misses which caused Mongo to retrieve the missing documents from the disk. The latter may be due to smaller memory size of the host.</h5>
 <h5>Nevertheless, too much disk I/O will induce latency in queries.</h5>
 </th>
 </tr>
@@ -152,7 +152,7 @@
 </th>
 <th>
 <h5> MongoDB uses a ticketing system to control the number of concurrent operations that can be performed. Each ticket corresponds to a an operation.</h5>
-<h5>This is synonymous with threads in Java programming.</h5>
+<h5>This is synonymous with threads in Java programming. </h5>
 <h5>By default there are 120 tickets available to the primary host. If the tickets available becomes "0" then all subsequent read operation will queue up until more tickets are available.</h5>
 </th>
 </tr>
@@ -290,7 +290,9 @@
 </tr>
 </tbody>
 </table>
-							</section>
+		
+
+					</section>
 
 					</div>
 

@@ -52,7 +52,7 @@
 									<h3>MongoDB - Using $FIRST with Aggregation</h3>
 								</header>
 
-<p>Lets assume that MongoDB is being used as a data store for an e-commerce application(similar to Amazon.com) on which users can shop for and buy the items they desire.</p>
+<p>Lets assume that MongoDB is being used as a data store for an e-commerce application (similar to Amazon.com) on which users can shop for and buy the items they desire. </p>
 
 <p>All the users purchases are stored in a collection named 'purchase_history'. Each document in the collection will be structured as below</p>
 
@@ -74,7 +74,7 @@
 
 <p>The site also has a section on the page which displays the recent 5 categories associated with the products the users shopped.
 
-For example if the user purchased 10 items of different categories in the following order :
+For example if the user purchased 10 items of different categories in the following order:
 
 sports
 kitchen
@@ -83,7 +83,7 @@ furniture
 sports
 sports
 clothing
-jewellery
+jewelry
 sports
 shoes
 
@@ -93,8 +93,8 @@ The "Recent 5 categories" section with show the following data
 sports
 kitchen
 furniture
-clothing 
-jewellery
+clothing 
+jewelry
 
 </p>
 
@@ -117,23 +117,25 @@ The above can be achieved through Mongo query using Aggregation framework combin
 </p>
 
 <pre><code>
- 
- db.purchase_history.aggregate([{
-   $match:{userId:"353236"}},
-   {$sort : { "purchaseDate" : -1}} , {$group:{_id:"$category" , 'purchaseDate': {$first: '$purchaseDate'}}},{$sort : { purchaseDate : -1} }]); 
-                     
- 
- 
- Explanation of what the above query does :
- 
- 1. Find all records associated with the userId.
- 2. Sort by purchaseDate descending order.
- 3. Group by category and project 'purchaseDate' as the first record in each group. The first record in this case will be the record with the latest "purchaseDate' for a each category.
- 4. Resort again by the projected purchaseDate becase the 'group' operation does not maintain any previous ordering.
- 
- 
- 
+ 
+ db.purchase_history.aggregate([{
+   $match:{userId:"353236"}},
+   {$sort : { "purchaseDate" : -1}} , {$group:{_id:"$category" , 'purchaseDate': {$first: '$purchaseDate'}}},{$sort : { purchaseDate : -1} }]); 
+                     
+ 
+ 
+ Explanation of what the above query does :
+ 
+ 1. Find all records associated with the userId.
+ 2. Sort by purchaseDate descending order.
+ 3. Group by category and project 'purchaseDate' as the first record in each group. The first record in this case will be the record with the latest "purchaseDate' for each category.
+ 4. Resort again by the projected purchaseDate because the 'group' operation does not maintain any previous ordering.
+ 
+ 
+ 
 </code></pre>
+
+
 
 
 							</section>

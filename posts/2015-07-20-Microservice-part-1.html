@@ -65,15 +65,15 @@
 
 <p>I will concentrate on one component per post and also share the source code on Git for your learning purpose and reference.</p>
 
- 
-<h3>Concepts:  What is a Microservice ?</h3>
+ 
+<h3>Concepts:  What is a Microservice ?</h3>
 
 <p>The traditional way of building web applications was to build one single artifact (say WAR file) which will have all your functionality wrapped inside of it. This single application will do everything from serving user requests, running reports, CRON job, interfacing with databases and other external third part services.</p>
 
 <p>This kind of application is said to be Monolithic in nature.</p>
 
-<p>Microservice based architecture emphasizes on not having a single deployable artifact but to have multiple smaller independently deployable artifacts.  Each smaller artifact deals with only part of the applications functionality. All modules work together to provide the functionality required of the application.
-Advantages of Microservices over Monolitic</p>
+<p>Microservice based architecture emphasizes on not having a single deployable artifact but to have multiple smaller independently deployable artifacts.  Each smaller artifact deals with only part of the applications functionality. All modules work together to provide the functionality required of the application.
+Advantages of Microservices over Monolithic</p>
 
 <h4>1. Faster Development</h4>
 
@@ -81,7 +81,7 @@ Advantages of Microservices over Monolitic</p>
 
 <p>Microservices consists of smaller independently deployable modules in comparison to a single deployable artifact in Monolithic architecture. This means that each application has its own code based. So, you can easily split your team into smaller functional teams and have them work independently on different modules without having each other step over one another or be blocked on some dependencies.</p>
 
-<p>If at all there are any dependencies, those can be easily mocked and the work can be carried out without any interruption.</p>    
+<p>If at all there are any dependencies, those can be easily mocked and the work can be carried out without any interruption.</p>    
 
 <h4>2. Better Unit Testing</h4>
 
@@ -93,7 +93,7 @@ Advantages of Microservices over Monolitic</p>
 
 <p><i><b>Keep your tech stack up to date !!!</b></i></p>
 
-<p>The main goal is for all modules to work well together. It is not necessary for all of the modules to leverage the same technology or frameworks/libraries. Each team can choose to implement the module they own in whatever technology they have expertise in. This also means that its easier to keep the applications tech stack up to date with contemporary library versions and dependencies while giving each team the independence to do what they want.</p>
+<p>The main goal is for all modules to work well together. It is not necessary for all of the modules to leverage the same technology or frameworks/libraries. Each team can choose to implement the module they own in whatever technology they have expertise in. This also means that it’s easier to keep the applications tech stack up to date with contemporary library versions and dependencies while giving each team the independence to do what they want.</p>
 
 <h4>4. Scalability</h4>
 
@@ -107,13 +107,13 @@ Advantages of Microservices over Monolitic</p>
 
 <p><i><b>Save $$$ with infrastructure !!!</b></i></p>
 
-<p>With microservices you no longer need to have all your VM's or nodes have the same amount of resource.You are free to allocate more resource to more demanding modules and keep light weight modules on lean hardwares. This will eventually help bring down the computing/infrastructure cost.</p>
+<p>With microservices you no longer need to have all your VM's or nodes have the same amount of resource. You are free to allocate more resource to more demanding modules and keep light weight modules on lean hardware. This will eventually help bring down the computing/infrastructure cost.</p>
 
 <h4>6. Downtimes</h4>
 
 <p><i><b>Less downtime impact !!!!</b></i></p>
 
-<p>Each module can be deployed independently without affecting the others. Also, if system is architectured well, the application can still be functional when one or more less important modules are brought down for maintenance  or due to some issue.</p>
+<p>Each module can be deployed independently without affecting the others. Also, if system is architectured well, the application can still be functional when one or more less important modules are brought down for maintenance or due to some issue.</p>
 
 <h4>7. Monitoring</h4>
 
@@ -126,27 +126,29 @@ Advantages of Microservices over Monolitic</p>
 <p><i><b>Save time !!!</b></i></p>
 
 <p>Its much easier to isolate a problem to a particular module. This saves time and energy and avoids you having to debug the entire application as a whole.</p>
- 
+ 
 <h3>Some drawback of Microservices</h3>
 
 <h6>1. Problem isolation and troubleshooting</h6>
 
-<p>Since now you are dealing with a distributed system, it becomes difficult to isolate where something is breaking.It is easier to isolate the module but sometimes or most of the times the breaking module might have dependency on other modules for data. The incoming data might be the problem which could be due to an issue in the other module.</p>
+<p>Since now you are dealing with a distributed system, it becomes difficult to isolate where something is breaking. It is easier to isolate the module but sometimes or most of the times the breaking module might have dependency on other modules for data. The incoming data might be the problem which could be due to an issue in the other module.</p>
 
-<p>Each developer would have a higher responsibility to under the over all system and how different modules interact with each other.</p>
+<p>Each developer would have a higher responsibility to understand the overall system and how different modules interact with each other.</p>
 
 <h6>2. Operational overhead</h6>
 
-<p>Many moudles and different teams means that there is always some deployment happening somewhere. There is an operational overhead to take care of the deployments and ensuring that the updated components play well with the other existing components.</p>
+<p>Many modules and different teams means that there is always some deployment happening somewhere. There is an operational overhead to take care of the deployments and ensuring that the updated components play well with the other existing components.</p>
 
 <h6>3. Speed over duplication</h6>
 
 <p>If the application is large there is a very possibility of having duplication of code/functionality in different modules. But this is a compromise that one has to make when demanding faster development and shorter release cycles for an application.</p>
 
- 
+ 
 
 
-							</section>
+			
+
+				</section>
 
 					</div>
 

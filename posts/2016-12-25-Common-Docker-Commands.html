@@ -52,7 +52,7 @@
 									<h3>Common Docker Commands</h3>
 								</header>
 
-<p>Some useful commonly used docker commands when working on OSX with VirtualBox.</p>
+<p>Some useful commonly used Docker commands when working on OSX with VirtualBox.</p>
 
 <p>1) This ensures the boot2docker VM is up and running.</p>
 <pre><code>
@@ -62,10 +62,10 @@ docker-machine start default
 <hr>
 <br/>
 
-<p>2) This is the command that needs to be executed once for every new terminal window opened, so as to establish connection with the boot2docker vm.</p> 
+<p>2) This is the command that needs to be executed once for every new terminal window opened, so as to establish connection with the boot2docker VM(Virtual Machine).</p> 
 
 <pre><code>
- eval “$(docker-machine env defaut)”
+ eval “$(docker-machine env defaut)”
 </code></pre>
 	
 <hr>
@@ -87,33 +87,33 @@ docker-machine ls
 
 Sample Output:
 
-NAME        ACTIVE   DRIVER       STATE     URL                         SWARM   ERRORS
-default     *        virtualbox   Running   tcp://192.168.99.100:2376           
+NAME        ACTIVE   DRIVER       STATE     URL                         SWARM   ERRORS
+default     *        virtualbox   Running   tcp://192.168.99.100:2376           
 
 </code></pre>
 
 <hr>
 <br/>
 
-<p>5) Regenerates the TLS certificates needed to communicated with the 'boot2docker' VM.</p>  
+<p>5) Regenerates the TLS certificates needed to communicated with the 'boot2docker' VM.</p>  
 
 <pre><code>
-docker-machine regenerate-certs default     /// To regenerate the TLS certs for docker
+docker-machine regenerate-certs default     /// To regenerate the TLS certs for Docker
 </code></pre>
 
 <hr>
 <br/>
 
-<p>6) Lists all available docker images</p> 
+<p>6) Lists all available Docker images</p> 
 
 <pre><code>
- docker images
+ docker images
 </code></pre>
 
 <hr>
 <br/>
 
-<p>7) Looks the docker process running with a particular container id.<p>
+<p>7) Looks the Docker process running with a particular container id.<p>
 
 <pre><code>
 docker ps -a | grep <container -id >
@@ -122,7 +122,7 @@ docker ps -a | grep <container -id >
 <hr>
 <br/>
 
-<p>8) Removes a running docker container</p> 
+<p>8) Removes a running Docker container</p> 
 
 <pre><code>
 docker rm <container id>
@@ -131,16 +131,16 @@ docker rm <container id>
 <hr>
 <br/>
 
-<p>9) Removes a particular docker image</p>
+<p>9) Removes a particular Docker image</p>
 
 <pre><code>
-docker rmi  <imageid>
+docker rmi  <imageid>
 </code></pre>
 
 <hr>
 <br/>
 
-<p>10) Kills a particular docker container</p>
+<p>10) Kills a particular Docker container</p>
 
 <pre><code>
 docker kill <container-id>
@@ -148,8 +148,8 @@ docker kill <container-id>
 
 <hr>
 <br/>
- 
-<p>11) Connects to the docker container and gives access to the bash shell to execute commands on the container</p> 
+ 
+<p>11) Connects to the Docker container and gives access to the bash shell to execute commands on the container</p> 
 
 <pre><code>
 docker exec -i -t <container id> /bin/bash
@@ -158,7 +158,7 @@ docker exec -i -t <container id> /bin/bash
 <hr>
 <br/>
 
-<p>12) Runs a docker image and does not automatically terminate the container. Allows an easy way to keep the container running and later connect to the containers shell using "docker exec -it " command.</p>
+<p>12) Runs a Docker image and does not automatically terminate the container. Allows an easy way to keep the container running and later connect to the containers shell using "docker exec -it " command.</p>
 
 <pre><code>
 docker run -d <image-name> tail -f /dev/null
@@ -168,7 +168,7 @@ docker run -d <image-name> tail -f /dev/null
 <br/>
 
 
-<p>13) This is not a docker command. This utility is part of the virtual box installation. Allows one to power-off a VM running on VirtualBox</p>  
+<p>13) This is not a Docker command. This utility is part of the virtual box installation. Allows one to power-off a VM running on VirtualBox</p>  
 
 <pre><code>
 VBoxManage controlvm <vm-name> poweroff
@@ -178,11 +178,13 @@ VBoxManage controlvm <vm-name> poweroff
 <hr>
 <br/>
 
-<p>14) Again, not a docker command. A virtual box command to share a directory on the HOST OS (OSX: /Users/esrinivasan/..) with the guest operating system running on VirtualBox. The name of the shared folder is set as "/eks" here.<p> 
+<p>14) Again, not a Docker command. A virtual box command to share a directory on the HOST OS (OSX: /Users/esrinivasan/..) with the guest operating system running on VirtualBox. The name of the shared folder is set as "/eks" here.<p> 
 
 <pre><code>
 VBoxManage sharedfolder add default --name /eks --hostpath /Users/esrinivasan/develop/learning/Docker/dec-2016/docker-node/docker-volume
 </code></pre>
+
+
 
 							</section>
 

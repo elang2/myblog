@@ -53,30 +53,32 @@
 								</header>
 
 
-<p>Most of the applications have some sort of badging functionality which is used to display certain counts to the users for CTA (Call To Action).</p>
+<p>Most of the applications have some sort of badging functionality which is used to display certain counts to the users for CTA (Call To Action). </p>
 
-<p>Once the user has clicked or acknowledged the counter then the value associated with the counter will be reset.</p>
+<p>Once the user clicks or acknowledges the counter, the value associated with the counter will need to be reset. </p>
 
-<p>Given a system with large number of users and working off a large data set, it's not always possible to compute the counter values in real time.
-Also, it may not make sense to update multiple records for different users when the counters are acknowledged.</p>
+<p>Given a system with large number of users and a large data set, it's not always possible to compute the counter values in real time. Counts in the database world are aggregation operations and would need to perform a whole table scan. </p>
 
-<p>There are three actions associated with the counters</p>
+<p>An alternative approach to doing count operation is to keep track of the counts in separate fields/columns in the database. This means that application has to perform two separate operations, one to store the data related to an action and another to increment/decrement/clear the counter fields/columns. </p>
+
+
+<p>Like explained above the three main actions associated with the counters are : </p>
 
 <ul>
 <li>1. Increment</li>
-<li>2. Decrement   - This usually happens when an action is undone or something is deleted.</li>
-<li>3. Reset       - When user acknowledges the counter.</li>
+<li>2. Decrement   - This usually happens when an action is undone or something is deleted. </li>
+<li>3. Reset       - When user acknowledges the counter. </li>
 </ul>
 
 
-<p>All the above actions could happen concurrently and be associated with an user. For this reason, all the operations on the counter needs to be atomic else the counters would be off the correct value.</p>
+<p>All the above actions could happen concurrently and be associated with a user. For this reason, all the operations on the counter needs to be atomic otherwise the counter values would be off and not accurate. </p>
 
-<p>A common example for the badging/counter feature is the <b>Facebook</b> notification system.</p>
+<p>A common example for the badging/counter feature is the <b>Facebook</b> notification system. </p>
 
-<p>The counters associated with the user are based on the actions performed by other users.</p> 
+<p>The counters associated with the user are based on the actions performed by other users. </p> 
 
-<p>An user can be associated with several other users and many of those other users could be performing the same or different actions at the same time. 
-Like, there could be 3 people sending the user messages or another 4 people sending friend requests.</p> 
+<p>A user can be associated with several other users and many of those other users could be performing the same or different actions at the same time. 
+Like, there could be 3 people sending the user messages or another 4 people sending friend requests. </p> 
 
 <div align="center">
 <figure class="center half">
@@ -87,10 +89,10 @@ Like, there could be 3 people sending the user messages or another 4 people send
 
 <br>
 
-<p>Given the above behavior of the system, the badging system can be architectured as below. The system would be event driven and the counter values eventually consistent.</p>
+<p>Given the above behavior of the system, the badging system can be designed as an event driven system. This would make the counter values eventually consistent but will free up the core application from performing any counter related operations. This also provides an opportunity to setup a separate database/store for tracking counters separately. </p>
 
-<p>Each microservice would generate events which gets listened by an events processor service. Based on the data in the event, the processor will update the
-value of counters associated with the user.</p>
+<p>Individual services would generate events which would get listened to by an events processor service. Based on the data in the event, the processor will update the
+value of counters associated with the user. </p>
 
 <div align="center">
 <figure class="center">
@@ -103,6 +105,7 @@ value of counters associated with the user.</p>
 
 <p>Here is a simple example of the REDIS HASH data structure which can be used to store the counters associated with the user.
 Each HASH is associated with a userId and all the counters are tied to the hash as key-value pairs. </p>
+
 
 <div align="center">
 <figure class="center">

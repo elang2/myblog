@@ -59,17 +59,14 @@
 </div>
 
 
-<p><a href="https://github.com/codecentric/spring-boot-admin">Spring Boot Admin</a> is a library which can be added to spring boot application to provide administrative capabilities.</p>
+<p><a href="https://github.com/codecentric/spring-boot-admin"><b>Spring Boot Admin</b></a> is a library which can be added to spring boot application to provide administrative capabilities. </p>
 
-<p>You can look at the github pages of the 'Spring Boot Admin' project to see what various feature of the 'Spring Boot Admin' libraries are.</p> 
-
-<p>In this article, I will focus on how Spring Boot Admin can be integrated with microservices supporting Hystrix dashboard. Spring Boot Admin provides single point of access to view dashboard of all registered services individually or aggregate all dashboard into a single view using Turbine.</p>  
-
+<p>In this article, I will focus on how Spring Boot Admin can be integrated with micro-services supporting Hystrix dashboard. Spring Boot Admin provides a single point of access to view dashboards of all registered services individually or aggregate all dashboard into a single view using Turbine.</p>  
 
 <p>Once you add the Hystrix library to your micro-service, the library exposes the metrics through the <b>'/hystrix.stream'</b> endpoint on the service.
-There's one stream per service. Clicking on the service in the spring boot admin will give you an easy access to the hystrix stream dashboard for that service.</p> 
+There's one stream per service. Clicking on the service in the spring boot admin will give you an easy access to the hystrix stream dashboard for that service. </p> 
 
-<div align="center"> 
+<div align="center"> 
 <figure class="center">
 	<img src="../images/sb-admin/spring-boot-admin.png" style="width: 70%; height: 70%" alt="Spring Boot Admin - Hystrix & Turbine"></img>
 	<figcaption><b>Spring Boot Admin - Hystrix & Turbine</b></figcaption>
@@ -77,13 +74,17 @@ There's one stream per service. Clicking on the service in the spring boot admin
 </div>
 
 
-<p><a href="https://github.com/Netflix/Turbine/wiki">Turbine</a> is another library from Netflix which helps aggregate multiple Hystrix stream and display them in a single dashboard.</p>
+<p><a href="https://github.com/Netflix/Turbine/wiki">Turbine</a> is another library from Netflix which helps aggregate multiple Hystrix stream and display them in a single dashboard. </p>
 
 <p>In order to be able to aggregate multiple Hystrix stream, Turbine needs to be able to determine which services are currently available and where the services are. This is usually achieved by using a service discovery framework like Consul or Eureka.</p>
 
-<p>Here, I am using an Eureka server. Each micro service has a Eureka client which registers with the Eureka server on startup. Turbine makes use of the instance discovery information provided by Eureka to establish connection to the microservice and read the Hystrix stream. The individual streams are passed through the Turbine aggregator so as to be able to render data in a single view.</p>
+<p>Here, I am using a Eureka server. Each micro-service has a Eureka client which automatically registers with the Eureka server on startup.</p> 
 
-							</section>
+<p>Turbine makes use of the instance discovery information provided by Eureka to establish connection to the micro-services and read their Hystrix stream. The individual streams are passed through the Turbine aggregator so as to be able to render data in a single view. </p>
+
+			
+
+				</section>
 
 					</div>
 

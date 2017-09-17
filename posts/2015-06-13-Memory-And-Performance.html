@@ -60,22 +60,22 @@
 
 
 
-<p>When it comes to application development, its always better to be a pessimist rather than an optimist. Irrespective of how good a developer you are are, the application will surely run into some unforeseen issues once its running in production environment.</p>
+<p>When it comes to application development, it’s always better to be a pessimist rather than an optimist. Irrespective of how good a developer you are, the application will surely run into some unforeseen issues once its running in production environment.</p>
 
 <p>Out of memory exceptions every now and then which requires Tomcat to be restarted or a case of degrading application performance which disappears after server restart but reappears after the application has been running for some time.</p>
 
-<p>Such kind of unpredictable behavior of the application is sure to leave every developer flabbergasted. One standard reply most of them will come back with is that "I am not able to reproduce this on my machine !!! Don't understand what's going on in PROD".  :-)</p>
+<p>Such kind of unpredictable behavior of the application is sure to leave every developer flabbergasted. One standard reply most of them will come back with is that "I am not able to reproduce this on my machine !!! Don't understand what's going on in PROD".  :-)</p>
 
-<p>Such problems are not difficult to isolate but would require the use of the right tools, perseverance and lots of patience.</p>
+<p>Such problems are not difficult to isolate but would require the use of the right tools, perseverance and lots of patience. </p>
 
 <p>In this post, I will explain how to use VisualVm to troubleshoot issues with you application deployed or running or Tomcat.</p>
 
- 
- 
- 
+ 
+ 
+ 
 <h3>Configuration</h3>
 
-<p>Visual VM is a JVM profiling tool built on top of  JDK tools (jstat,JConsole,jStack,jmap,jinfo).</p>
+<p>Visual VM is a JVM profiling tool built on top of  JDK tools (jstat,JConsole,jStack,jmap,jinfo).</p>
 
 <p>It does a nice job of representing the data retrieved using the JDK tools in a nice graphical manner.</p>
 
@@ -92,10 +92,10 @@
 <b>Step 2: Enable JMX remote on Tomcat so that VisualVm can connect to it.</b>
 
 	<br>
-	 <i>To do this, edit catalina.bat(Windows)  or catalina.sh(unix)  and add the following line</i>
-	 <pre>
-		 <code>
-<b>Command :</b> 
+	<i>To do this, edit catalina.bat(Windows)  or catalina.sh(unix)  and add the following line</i>
+	<pre>
+		<code>
+<b>Command :</b> 
 
 set "JAVA_OPTS=%JAVA_OPTS% -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9090 -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=<IP-Address-Of-Tomcat-Host>"
 
@@ -147,7 +147,7 @@ java.rmi.server.hostname
 
 <h3>Making Sense Of the Data</h3>
 
-<p>Below  is a screenshot of an application which seems to be taking up close to 100% of the CPU and also peaking up the heap space usage.</p>
+<p>Below  is a screenshot of an application which seems to be taking up close to 100% of the CPU and also peaking up the heap space usage.</p>
 
 <p>This is one of the common scenarios that one might encounter in real world. The below graph was collected during a medium load level testing operation that spanned over a period of 20+ minutes.</p>
 
@@ -184,8 +184,10 @@ java.rmi.server.hostname
 
 <p>Once you have installed the plugin, in eclipse you can go to File-> Open file -> (Select the heap dump .hprof file). The plugin will automatically start analyzing it and render graphs and histograms for you.</p>
 
-<p>Below is a sample graph. It tells you how the heap space is divided between different objects and also lists what objects and corresponding classes are causing this issue. With this information you can go back to your code and investigate the reason for the objects not being eligible for garbage collection.
+<p>Below is a sample graph. It tells you how the heap space is divided between different objects and lists what objects and corresponding classes are causing this issue. With this information, you can go back to your code and investigate the reason for the objects not being eligible for garbage collection.
 </p>
+
+
 
  
 <br/> 

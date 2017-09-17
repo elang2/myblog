@@ -54,30 +54,30 @@
 
 
 <p>
-A CHAT system essentially lets one user send messages to and receive messages from other users. The messages are usually text based but the chat system should be able to support different media types like Videos, Audio, images etc.
+A CHAT application enables users to send and receive messages from other users. The messages are usually text based but the application should be able to support different media types like Videos, Audio, images etc.
 
-In the following article I will concentrate on data storage aspect of the CHAT system. I will explain the various considerations behind choosing the current date store.  
+In the following article, I will focus on data storage aspects of a real time CHAT application. I will explain the various considerations behind selecting a data store for a real time CHAT application and how we 
 
 </p>
 
 <h3>Choosing A Data Store</h3>
 <p>
-This is what we wanted from the storage aspects of the system :
+These were our main goals & expectations for a data store :
 
 <ul>
-<li>1. To move away from RDBMS.</li>
+<li>1. To move away from RDBMS. </li>
 	
-<li>2. Move towards a NoSQL solution with - 
+<li>2. Move towards a NoSQL solution with - 
 	<ul>
-	<li>a. Flexible schema.</li>
-	<li>b. Horizontally scalable to meet increased load.</li>
-	<li>c. High performance.</li>
+	<li>a. Flexible schema. </li>
+	<li>b. Horizontally scalable to meet increased load. </li>
+	<li>c. High performance. </li>
 	</ul>
 </li>
 	
-<li>3. Easy maintenance.</li>
+<li>3. Easy maintenance. </li>
 
-<li>4. Resilient and quick recovery.</li>
+<li>4. Resilient and quick recovery. </li>
 
 <li>5. Monitoring.</li>
 </ul>
@@ -85,7 +85,7 @@ This is what we wanted from the storage aspects of the system :
 <p>
 RDBMS with their normalized storage structure, licensing cost and transactional, locking feature did not seem to fit into our idea of a solution with can support large DB ops/sec with minimum latency.
 
-Flexible schema helps with evolving requirements and new features. Data store maintenence like backup, restore , scaling up etc. should not be a ton of work.
+Flexible schema helps with evolving requirements and new features. Data store maintenance like backup, restore , scaling up etc. should not be a ton of work.
 </p>
 
 <h3>What We Choose:</h3>
@@ -95,35 +95,35 @@ Flexible schema helps with evolving requirements and new features. Data store ma
 <img src="../images/mongo/mongo-db-logo.png" style="width: 70%; height: 70%" alt="MongoDB"></img>
 </figure>
 </div>
-  
-  
+  
+  
 <p><b>MongoDB Atlas</b> - A software-as-a-solution version of the well known popular document based NoSQL database.</p>
 
 
 <h3>Why We Choose MongoDB Atlas:</h3>
 
 <ul>
-<li>1. Hosted service. No upfront investment in hardwares or need to have a NoSQL DB Administrator to setup the cluster.</li>
+<li>1. Hosted service. No upfront investment in hardware or need to have a NoSQL DB Administrator to setup the cluster.</li>
 
-<li>2. Document based storage with support for social media features like tags, likes, comments etc.</li>
+<li>2. Flexible schema, document based storage with support for social media features like tags, likes, comments etc.</li>
 
 <li>3. Ability to easily scale up or across by either increasing the machine configuration or by adding additional shards.</li>
 
-<li>4. Data locality supports fast data retrival and storage.</li>
+<li>4. Data locality supports fast data retrieval and storage.</li>
 
-<li>5. Automated backup, data snapshotting and one click restore.</li>
+<li>5. Automated backup, data snapshotting and one click restore. </li>
 
-<li>6. High availability with automated failover and recovery.</li>
+<li>6. High availability with automated failover and recovery. </li>
 
 <li>7. Automated minor version upgrade of the MonogDB cluster.</li>
 
 <li>8. One click upgrade for major versions.</li>
 
-<li>9. Dashboards visually representing various system and database level metrics. These metrics are archived to provide a historical overview.</li>
- 
-<li>10. Alerting based on system and database level metrics.</li>
+<li>9. Dashboards visually representing various system and database level metrics. These metrics are automatically archived to provide a historical overview of the sytem health and performance.</li>
+ 
+<li>10. Alerting based on host, network and database level metrics.</li>
 
-<li>11. Alerting integration with other third part tools like SLACK and Pagerduty.</li>
+<li>11. Integration with other third part tools like SLACK and Pagerduty for alerting.</li>
 
 <li>12. Access to MongoDB enterprise support.</li>
 

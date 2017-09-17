@@ -64,18 +64,18 @@
 
 <p>2. The size of the payload resulting from Protobuff encoding is smaller in comparison to how it would have been if the data were transmitted as JSON or XML.</p>
 
-<p>3. The Protobuff schema is backward compatible. This means that two services using objects generated from different versions of ProtoBuff schema can still send and receive information between them without resulting in any runtime exceptions. The Protobuff framework takes care of serializing fields which match the ones defined in its schema version and ignore any that don't match.</p> 
+<p>3. The Protobuff schema is backward compatible. This means that two services using objects generated from different versions of ProtoBuff schema can still send and receive information between them without resulting in any runtime exceptions. The Protobuff framework takes care of serializing fields which match the ones defined in its schema version and ignore any that don't match.</p> 
 
 <p>4. Field level validation and extensibility. Validation for field types, values using Enum and ordinality can be easily defined in the schema. Also one can easily import the schema into other schemas to create new structures.</p>
 
 <p>5. Language interoperability. Since the payload is bytes, the sender and receiver sharing the schema can be implemented in any language. You can have a Java Webservice talk to a different server written in C++.</p>
 
 
-<h3>When to use Protos</h3> 
+<h3>When to use Protos</h3> 
 
 <p>1. Protos makes sense for back-end system to system services where there is no need to have visibility of the payload being transmitted.</p>
 
-<p>2. Ideal for microservices architecture where each service is deployed independent of each other. The backward compatability of the schemas ensures that different service can work well while still using different versions of the library.</p>
+<p>2. Ideal for microservices architecture where each service is deployed independent of each other. The backward compatibility of the schemas ensures that different service can work well while still using different versions of the library.</p>
 
 
 <h3>Protos are not ideal for</h3>
@@ -87,6 +87,7 @@
 <p>3. Want responses in human understandable format.</p>
 
 <p>4. When you don't want to have a contract for communication.</p>
+
 
 
 
