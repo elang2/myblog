@@ -145,7 +145,11 @@ bash$ <b>./zookeeper-shell.sh zookeeper1v.r3.dc1.eharmony.com:2181</b>
 </br>
 Output:
 
-TBD
+<div align="center">
+	<figure class="half center">
+	<img src="../images/zookeeper/zookeeper-offset.png" style="width: 70%; height: 70%" alt="Zookeeper offsets"></img>
+	</figure>
+</div> 
 
 </code>
 </pre>
@@ -183,6 +187,27 @@ bash$<b>./kafka-console-consumer.sh --consumer.config /tmp/consumer.config --for
 The <b>kafka-console-consumer.sh</b> script is located under the /bin directory of the kafka installation
 
 
+<figure class="half center">
+	<img src="../images/zookeeper/kafka-offset.png" style="width: 70%; height: 70%" alt="Kafka offsets"></img>
+</figure>
+
+
+<p><b>Structure of message in __consumer_offset topic </b></p>
+
+<pre>
+<code>
+{
+    "topic":"topic-name",
+    "partition":11,
+    "group":"console-consumer-45567",
+    "version":2,
+    "offset":15,
+    "metadata":"",
+    "commitTimestamp":1501542796444,
+    "expireTimestamp":1501629196444
+}
+</code>
+</pre>
 
 
 
