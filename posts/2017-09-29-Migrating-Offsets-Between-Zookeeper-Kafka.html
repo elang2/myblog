@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Migrating offsets between Zookeeper & Kafka</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="This article describes how to read offsets from both Zookeeper and Kafka">
+		<meta name="keywords" content="Kafka, Zookeeper, offsets, Messaging">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">September 21, 2017</span>
+									<h3>Kafka & Zookeeper Offsets</h3>
+								</header>
+
+<p>Like explained in the article <a href="../posts/2017-09-20-Kafak-And-Zookeeper-Offsets.html"><i><b>Kafka & Zookeeper Offsets</b></i></a>, there are two places
+where the offsets can be maintained. Either in the <b>Zookeeper</b> or in the <b>__consumer_offsets</b> topic of Kafka.
+</p>
+
+<p>If you want to use the newer version of client library and leverage Kafaka for the offset tracking then you would have to go down the path 
+of migrating the offsets from Zookeeper to Kafka.</p>  
+
+<p>There are two ways in which this can be achieved.</p>
+
+
+<u><b>Approach#1:</b></br></u>
+<p>Read offsets through Zookeeper CLI for each consumer group, topic and partition that you intend to migrate to Kafka 
+and build a message that can be commited to the  <b>__consumer_offsets</b> topic.</p>
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/zookeeper/migrating-zk-kafka.png" style="width: 70%; height: 70%" alt="Migrating Between Kafka & Zookeeper"></img>
+	</figure>
+</div> 
+
+<hr></hr>
+<u><b>Approach#2:</b></u></br>
+<p>Leverage the Dual commit capability provided by the newer versions of the consumer library. </p>
+
+<p>Dual commit enabled the consumer client driver to write offsets to both Kakfa and Zookeeper.</p>
+
+<table>
+
+<tr>
+<td><b>Consumer Config Property</b></td>
+<td><b>Possible Values</b></td>
+</tr>
+
+<tr>
+<td>offsets.storage</td>
+<td>zookeeper   [or]    kafka</td>
+</tr>
+
+<tr>
+<td>dual.commit.enabled</td>
+<td>true  [or]  false</td>
+</tr>
+
+</table>
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/zookeeper/dual-commit.png" style="width: 70%; height: 70%" alt="Kafka Zookeeper Dual Commit"></img>
+	</figure>
+</div> 
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
