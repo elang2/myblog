@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>API Gateway Design with OAuth2</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Designing a API Gatway with OAuth2">
+		<meta name="keywords" content="Architecture, Design, Microservices, OAuth2">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">August 08, 2018</span>
+									<h3>API Gateway Design with OAuth2</h3>
+								</header>
+
+
+
+Any internet application will have 10's if not 100's of API's exposed to exchange information between different system and the application clients. Its very important to secure these API's and control access to them
+in a well defined manner. We don't want malicious entities accessing or manipulating information on the application. 
+
+<br/>
+<br/>
+For example, UBER may expose API's that allow a user to 
+request a ride, cancel ride, view payment history etc.  GROUPON may expose API's to update user profile, list user related promotions etc.   
+
+<br/>
+<br/>
+A micro-services architecture based application may constitute of a large number of independent services and it may not be realistic to duplicate and implement the API security logic at every layer or service.
+Its best to centralize the security layer so as to make the API governance easy.
+
+<br/>
+<br/>
+In this article I will describe a simple design for an API gateway which can be used to authorized and control access to underlying API's.  
+The API gateway is a simple PROXY service to underlying API's but with an added Authorization layer.    
+
+<br/>
+<br/>
+
+<h3>User Authentication</h3>
+
+
+The first step to gain access to API's are to establish the user identity. A typical flow is shown below:
+
+<br/>
+<br/>
+
+
+<div align="center">
+<figure class="center">
+	<img src="../images/api-gateway/Login-Flow.png" style="width: 70%; height: 70%" alt="Simple User Login Flow"></img>
+	<figcaption><b>Fig 1: User Login Flow</b></figcaption>
+</figure>
+</div>
+
+<br/>
+<br/>
+
+The idea is to delegate the user authentication to a dedicated service which looks up user details from the data store, validates it and grants permissions/access.   
+This service will use OAuth2 concepts. 
+<a href="https://oauth.net/2/"><b>OAuth2</b></a> is a standardized protocol for authorization. It follows a simple concept of creating a set of token for each representing an authorized user and associating permissions/grants with those tokens.
+
+
+<br/>
+<br/>
+
+<div align="center">
+<figure class="center">
+	<img src="../images/api-gateway/Auth-Flow.png" style="width: 70%; height: 70%" alt="User Authentication Design"></img>
+	<figcaption><b>Fig 2: User Authentication Design</b></figcaption>
+</figure>
+</div>
+
+<br/>
+<br/>
+
+
+
+<h4>Why use REDIS as Token Store ?</h4>
+
+
+<ul>
+<li>1. Allows super fast reads and large number of read-write operations per second. </li>
+
+<li>2. A TTL can be set on each token to auto expire. Save the trouble of building a separate service to clean up old tokens.</li>
+
+<li>3. REDIS cluster can be scaled horizontally based on login traffic</li>
+
+</ul>
+
+
+<h3>API Gateway</h3>
+
+<p>
+The API gateway is the only service that will be exposed outside the firewall. It acts as a proxy to underlying API's in the microservice and does a quick authorization and look up of user information 
+from REDIS. The user information especially the userId is used to invoke the underlying APIs. 
+</p>
+<p>
+The gateway also does the job of passing down other user related information like grants to underlying service to help customize responses based on what the user is allowed to access.
+</p>
+<p>
+This layer can be easily scaled to accomodate increased login traffic and also quickly blocks any DDOS attacks without consuming or affecting resources on the underlying data stores or other microservices.  
+</p>
+
+<br/>
+<br/>
+
+<div align="center">
+<figure class="center">
+	<img src="../images/api-gateway/Postlogin-Flow.png" style="width: 70%; height: 70%" alt="API Gateway Design"></img>
+	<figcaption><b>Fig 3: API Gateway Design</b></figcaption>
+</figure>
+</div>
+
+<br/>
+<br/>
+
+
+<div align="center">
+<figure class="center">
+	<img src="../images/api-gateway/Redis-Struct.png" style="width: 70%; height: 70%" alt="Redis Data Structure For Token"></img>
+	<figcaption><b>Fig 4: Tokens Data Structure In REDIS</b></figcaption>
+</figure>
+</div>
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
