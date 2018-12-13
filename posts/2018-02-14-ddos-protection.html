@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Distributed Denial Of Service(DDOS) Attack Mitigation</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Designing a API Gatway with OAuth2">
+		<meta name="keywords" content="Architecture, Design, Microservices, OAuth2">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">August 08, 2018</span>
+									<h3>Distributed Denial Of Service(DDOS) Attack Mitigation</h3>
+								</header>
+
+<p>
+In the current age of big data and internet businesses it is a constant struggle for an organization to prevent data breaches and protect the data of their users. The current landscape of cyber security is still evolving
+and attempts are being made to use Artifical Intelligence to protect systems from attacks and data breaches.
+</p>
+
+<p>
+User data is much valued in the shadowy underworld of darknet. There are amorphous hacker guilds that constantly attack internet sites to compromise the security and data.
+The attacks come in different forms: SQL injection, social engineering and denial of service attacks.
+</p> 
+
+
+<h3>DDOS Attack</h3>
+<p>
+One of the most common and extensive form of attack is the DDOS(distributed denial of service attack). This attack is a brute force attack against a site to obtain credentials for a user on the system.
+The attacker would use the compromised account to launch social engineering attacks on other users or he can sell the details on the darknet.
+
+
+
+<div align="center">
+<figure class="center">
+	<img src="../images/ddos/ddos.png" style="width: 70%; height: 70%" alt="DDOS Attack"></img>
+	<figcaption><b>Fig 1: DDOS Attack</b></figcaption>
+</figure>
+</div>
+
+<br/>
+<br/>
+
+<h5>Characteristics of DDOS attack</h5>
+
+<ul>
+<li>These attacks are large scale and are known to leverage cloud capabilities to scale requests and widen the attack area.
+</li>
+<li>
+DDOS attacks simulates user request and spoof the origin IP address and other request information like the headers. It may not be easy to isolate requests that are part of a DDOS attack to a certain IP address(or range) or to a country/region.
+</li>
+<li>
+They cause the application/site to use more than normal computing resource due to increased load. The side effect of this could lead to resource starvation for requests associated with actual user and lead to deteriorated performance of the site or potentially make the system inaccessible to legitimate users.
+</li>
+<li>
+Login and registration modules of a site are the first targets for the attackers seeking to gain unauthorized access to the system.
+</li>
+</ul>
+  
+
+</p> 
+
+<br/>
+<br/>
+
+<h3>DDOS Mitigation</h3>
+
+<p>
+Its not always possible to completely block DDOS attacks but the impact of it sure can be reduced and its effect mitigated.
+</p>
+
+
+
+<div align="center">
+<figure class="center">
+	<img src="../images/ddos/ddos-mitigation.png" style="width: 70%; height: 70%" alt="DDOS Attack mitigation"></img>
+	<figcaption><b>Fig 2: DDOS Mitigation General Design</b></figcaption>
+</figure>
+</div>
+
+
+<h5>Strategies</h5>
+
+<p>
+
+<p>
+<b>1.</b> Leverage 3rd party WAF (Web Application Firewall) tools. These tools are specifically built to monitor, alert and block certain attack patterns. They act as a reverse proxy to your application/site with added security on top of it.
+Some well-known WAF are from <b>Cloudflare, Akamai , Incapsula and F5</b>. In addition to DDOS attacks they also help block other attack type like XSS, cookie poisoning, buffer overflow, backdoor entry, stealth commanding etc. 
+</p>
+
+<p>
+<b>2.</b> Make sure that your services can scale well enough to take the blunt force of the DDOS attack till they can be blocked. Using a public cloud provider will allow you to scale up and down as needed. 
+</p>
+<p>
+<b>3</b>. A true DDOS attack will be difficult for a WAF to block. Mitigating such attack needs more intelligence and data. One can start by monitoring and pulling WAF request logs into their logging/analysis tools like Kibana/Logstash to figure out the URI 
+that is being attacked, the IP address & country from which the requests are originating and the user agent of the request. Looking at these data may help come up with a certain IP address range or country or user-agent patterns which can be added to the WAF rules to block those requests. 
+</p>
+
+<p>
+<b>4</b>. It is also advisable to add a rate-limiting service in front of your key user facing services(like login/registration modules) to rate limit API requests based on IP address or user agents. 
+</p>
+<p>
+<b>5.</b> Usage of CAPTCHA is also effective in some extent in discouraging the scripts behind the DDOS attack from successfully submitting forms on the site. 
+</p>
+
+</p>
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>

@@ -153,13 +153,34 @@ This layer can be easily scaled to accomodate increased login traffic and also q
 <br/>
 <br/>
 
-
 <div align="center">
 <figure class="center">
 	<img src="../images/api-gateway/Redis-Struct.png" style="width: 70%; height: 70%" alt="Redis Data Structure For Token"></img>
 	<figcaption><b>Fig 4: Tokens Data Structure In REDIS</b></figcaption>
 </figure>
 </div>
+
+
+
+<br/>
+<br/>
+
+<h3>Implementation Notes</h3>
+
+<ul>
+<li>
+1. The API gateway layer can be implemented as a simple JAVA application with RxJava to do non-blocking API calls and stream the request/response data between client and server. 
+</li>
+<li>
+2. <a href="https://mvnrepository.com/artifact/redis.clients/jedis/2.9.0"><b>Jedis</b></a> is a good java library for interfacing with REDIS
+</li>
+<li>
+3. Spring OAuth library provides implementations that can be overridden to hook into different user stores and add customized logic for user retrival, validation and token metadata.  
+</li>
+
+</ul>
+
+
 
 							</section>
 
