@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Role Based Access Control Design For MicroServices</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="This article explains RBAC concept and how its can implemented in a micro-services environment">
+		<meta name="keywords" content="Microservices, Role based access sytem, RBAC, Architecure, Security, Access control, Authorization">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">September 29, 2018</span>
+									<h3>Role Based Access Control Design For MicroServices</h3>
+								</header>
+
+
+This article extends the principles and design of API gateway discussed in the article here <a href="../posts/2018-08-02-api-gateway.html"><b>API Gateway</b></a>. 
+
+<p>
+<b>RBAC</b> stands for <b>Role Based Access Control</b>. Its an approach to restricting system access to authorized users by using a set of permissions and grants. This approach intends to make the governance of 
+controls between users, vendors and customers efficient. 
+</p>
+
+<p>
+The model is built on a hierarchical relational manner with the Role group forming the top level. Permissions required to perform a certain role ( example: vendor, user, subscriber, admin) etc. are grouped under
+appropriate roles. A role group can contain one or more roles under it. This mean that, role-groups inherit combined permissions of all roles under it. Permissions can be further controller by modules if needed.
+</p>
+
+
+<p>
+
+<h3>RBAC System Design For MicroServices</h3>
+
+<br/>
+<br/>
+
+<p>
+<div align="center">
+	<figure class="half center">
+	<img src="../images/rbac/rbac-design.png" style="width: 80%; height: 80%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 1: RBAC Design For MicroServices</b></figcaption>
+	</figure>
+</div>
+</p>
+
+<br/>
+<br/>
+
+
+<h6>Approach</h6>
+
+<p>
+<b>1.</b> A dedicated set of database tables to hold the role groups, roles and permissions relationships. One service will be responsible for retrieving permissions for a given list of role groups. 
+</p>
+
+<br/>
+<div align="center">
+	<figure class="half center">
+	<img src="../images/rbac/rbac-schema.png" style="width: 80%; height: 80%" alt="RBAC DB Schema"></img>
+	<figcaption><b>Fig 2: RBAC DB Schema Design</b></figcaption>
+	</figure>
+</div>
+
+<br/>
+
+
+<p>
+<b>2.</b> Which user gets what role group business logic will be encapsulated in the Auth Server. User information will be evaluated during login to derive the role group that needs to be assigned. The role group will be attached to the tokens generated as part of OAuth2 process.
+</p>
+
+<p>
+<b>3.</b> The API gateway validates the user tokens and invokes the underlying micro-service API's. The API gateway will have a local cache of map of role groups and associated permission. This cache will be periodically refresh by reaching out to Auth Server in the background. This refresh ensures that the API gateway always has access to any permission changes made by the RBAC Admin in the metadata system.
+</p>
+
+<p>
+<b>4.</b> The API gateway lookup the user token, extracts the user details and assigned role groups. It then derives the associated permissions from the cached data and the sends down the permission to the micro-services as part of enriched request headers.
+</p>
+
+<p>
+<b>5. </b> All microservices can use a common library to evaluate if "READ" or "EXECUTE" permissions are available to perform a certain action. The presence or absence of the permission will control the API response behavior.
+</p>
+
+<p>
+<b>6. </b> The clients can cache the list of permissions available to the user to control UI treatment and behavior. Permission SYNC between the server and the client can be triggered when the HASH of permissions cached on the client doing login flow turns out to be different from the permission HASH that is sent by the clients as part of every API response.
+</p>
+
+
+<p>
+Below are some example metadata for the RBAC system.
+</p>
+
+
+
+<p>
+<div align="center">
+	<figure class="half center">
+	<img src="../images/rbac/rbac-example.png" style="width: 80%; height: 80%" alt="RBAC Example Data"></img>
+	<figcaption><b>Fig 3: Example Data For RBAC</b></figcaption>
+	</figure>
+</div>
+</p>
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
