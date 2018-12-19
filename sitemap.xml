@@ -6,129 +6,167 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
+
 <url>
   <loc>https://elang2.github.io/myblog/</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>1.00</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/index.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts-listing.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/about-me.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elang2.github.io/myblog/posts/2018-09-29-Role-Based-Access-Control-MicroServices.html</loc>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elang2.github.io/myblog/posts/2018-08-02-api-gateway.html</loc>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elang2.github.io/myblog/posts/2017-10-13-Redis-Pub-Sub.html</loc>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elang2.github.io/myblog/posts/2018-02-14-ddos-protection.html</loc>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elang2.github.io/myblog/posts/2017-10-01-RxJava-and-API-Performance.html</loc>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elang2.github.io/myblog/posts/2017-09-30-MongoDB-BDR.html</loc>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://elang2.github.io/myblog/posts/2017-09-20-Kafak-And-Zookeeper-Offsets.html</loc>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2017-04-16-Hystrix-turbine-spring-boot.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2017-02-25-Hystrix.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2017-06-10-Counter-Bading-Service-Architecture.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2016-12-21-MongoDB-Prod-Alerting.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2016-12-19-Mongodb-Atlas.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2017-02-27-Monogdb-atlas-as-message-store.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2017-01-15-Mongodb-using-first-with-aggregation.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2017-02-01-Mongodb-query-examples.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2016-12-25-Common-Docker-Commands.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2017-02-10-Running-Multiple-JDK-And-Maven-on-OSX.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2016-12-10-SpringBoot-Mongo-Jersey.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2016-01-03-Docker-Volumes.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-07-20-Microservice-part-1.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-08-01-Google-Protobuffs.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-07-29-Data-Transfer-Objects.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-06-13-Memory-And-Performance.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-05-28-Cassandra-Unit-Testing.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-05-26-Cassandra-on-AWS-Part3-Backup-Strategy.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-05-23-Cassandra-on-AWS-Part2-Scaling-Strategy.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-05-20-Cassandra-on-AWS-Part1-Setup.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://elang2.github.io/myblog/posts/2015-04-17-Coap-Protocol-Testing-Using-Jmeter.html</loc>
-  <lastmod>2017-09-14T02:09:41+00:00</lastmod>
-  <changefreq>always</changefreq>
+  <lastmod>2018-12-14T00:33:49+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
+
+
 </urlset>
