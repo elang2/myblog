@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Kubeternetes with MiniKube</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Deploying a simple service on Kubernetes with Minikube">
+		<meta name="keywords" content="Microservices, Container, Kubernetes, Docker">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">July 18, 2018</span>
+									<h3>Kubernetes with Minikube</h3>
+								</header>
+
+<div align="center">
+	<figure>
+	    <img src="../images/containers/kubernetes.png" style="width: 30%; height: 30%" alt="Kubernetes" />
+	</figure>
+	</div>
+
+<br/>
+Here is a quick tutorial on deploying a simple service to Kubernetes & <a href="https://github.com/kubernetes/minikube">Minikube</a>. 
+
+<br/>
+<h3>Prerequisites</h3>
+
+1. Minikube. Installation instructions <a href="https://github.com/kubernetes/minikube/releases">here</a>.
+2. Kubernetes. Installation instructions <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">here</a>. 
+
+<br/>
+
+Most of the AWS regions have 3 AZ’s. As a best practice, it’s good to have at least one EC2 instance in each AZ of AWS region. In case you are working with a region which has only 2 regions then one of the region will have one more EC2 instance than others.
+
+	
+
+</br></br>
+<h3>Setup</h3></br>
+<h4>AWS</h4>
+
+<ul>
+    <li>Choose a region which has three availability zones. For the purpose of this post, I have chosen us-west-2.</li>
+    <li>Spin up one EC2 instance in each AZ.</li>
+    <li>Databases should always be on private subnets of VPC and should not be open to internet.</li>
+    <li>Update the firewall setting on the security group associated with the EC2 instance to allow incoming traffic on the following ports
+    
+    	<ul>
+    	<li>Port: 9042   <b><i>This is the port for CQL clients</i></b></li>
+    	<li>Port: 7000   <b><i>This port is used for inter-node communication on the cluster</i></b></li>
+    	</ul>
+</ul>
+
+
+<h4>Installable</h4>
+
+<ul>
+	<li>Download Cassandra 2.2.4V from the below URL. <br/>
+    http://downloads.datastax.com/community/dsc-cassandra-2.2.4-bin.tar.gz</li>
+    <li>Unzip it to a location on the EC2 machine.</li>
+    <li>Do this on all three nodes.</li>
+</ul>
+
+
+<h4>Cassandra Configuration</h4>
+
+Update the configuration files present under the <b>/conf</b> folder of Cassandra installation.
+
+<pre>
+  <code>
+<b>File : <i>cassandra-rackdc.properties</i></b>
+
+<b>dc_suffix</b> = 2a_cassandra   # This property uniquely identify a node in a datacenter(DC).DC names are automatically assiged by Cassandra using EC2Snitch/EC2MultiRegionSnitch.
+<b>prefer_local</b> = true
+  </code>
+</pre>
+
+
+<pre>
+  <code>
+<b>File : <i>cassandra.yaml</i></b>
+
+<b>partitioner:</b> org.apache.cassandra.dht.Murmur3Partitioner  # This is the default and we will keep it as it is. Used to hash and distribute the keys across different nodes.
+
+<b>endpoint_snitch:</b> Ec2Snitch  # Use EC2MultiRegionSnitch if you are setting up multiple clusters spanning different regions. Otherwise use Ec2Snitch
+
+<b>listen_address:</b> 10.101.212.201  # This will be the private IP address of the EC2 instance. Will vary from instance to instance.
+
+<b>broadcast_address:</b> 10.101.212.201  # private IP address of the EC2 instance.
+
+<b>rpc_address:</b> 10.101.212.201  # private IP address of the EC2 instance
+
+<b>seeds:</b> "10.101.212.206,10.101.214.60"   ## IP address of the nodes acting as seeds
+
+<b>key_cache_size_in_mb:</b> 100000
+
+<b>data_file_directories:</b>   # location where database files needs to be stored. 
+   -<b>/local/mnt/cassandra/data</b>
+   
+<b>commitlog_directory:</b> /local/mnt/cassandra/commitlog  #location where the commit logs needs to be stored.
+  </code>
+</pre>
+
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>RxJava & API Performance</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="This article explains how RxJava can be leveraged to improve the performance of a REST API in a micro service architecture.">
+		<meta name="keywords" content="RxJava, REST, API, Microservices">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">October 01, 2017</span>
+									<h3>RxJava & API Performance</h3>
+								</header>
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/rx-java/rx-java.png" style="width: 30%; height: 30%" alt="Reactive Java"></img>
+	</figure>
+</div>
+
+
+<p>
+Below is a simple workflow of a shopping service. All the operations are executed in a sequence. There are 5 outgoing API calls to other microservices.
+Each microservice has its own SLA for its API's. 
+</p>
+
+<p>
+<b>Time taken to complete Purchase =  Sum( Time taken to complete all 5 API calls)</b>
+</p>
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/rx-java/shopping-service.png" style="width: 50%; height: 50%" alt="Shopping Service Workflow"></img>
+	<figcaption><b>Fig 1: Shopping Service Workflow</b></figcaption>
+	</figure>
+</div>
+
+
+<br/>
+
+
+<p>
+Its possible to re-orchestrate the API calls to below in order to improve performance and the reduce the total time for an item purchase.
+Independent API calls to different microservice can be executed in parallel. 
+</p>
+
+<p><b>Maximum time to complete parallel calls = Max(time taken by each call in a parallel block)</b>
+
+<br>
+This is better than the previous approach where the total time to execute two call was the sum of the time taken for each !!!!!.
+</p>
+
+<p>
+Making API calls in parallel would require the developer to write code that deals with thread management and asynchronous activity. This can become really complex
+when dealing with a really complex set of orchestrations.  
+</p>
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/rx-java/shopping-service-rx.png" style="width: 50%; height: 50%" alt="Shopping Service with RxJava"></img>
+	<figcaption><b>Fig 2: Shopping Service Workflow With RxJava</b></figcaption>
+	</figure>
+</div>
+
+
+<h4>RxJava to the rescue</h4>
+<p>
+RxJava is a library for composing asynchronous and event-based programs by using observable sequences. It extends the observer pattern and allows
+composition of multiple sequences together while abstracting concerns like synchronization, low level thread management and locks. 
+
+This very abstraction of threading feature makes it easy to use this library for a wide variety of use cases.
+</p>
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
