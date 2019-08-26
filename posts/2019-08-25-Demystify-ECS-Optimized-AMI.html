@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Amazon ECS - Deep dive & Demystify ECS Optmized AMI</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Understand what goes inside the ECS Optmized AMI">
+		<meta name="keywords" content="Microservices, AWS, AMI, ECS, Docker, Image">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">August 25, 2019</span>
+									<h3>Amazon ECS - Deep dive & Demystify ECS Optmized AMI</h3>
+								</header>
+
+<p>
+AWS Elastic Container Service(ECS) makes it very easy for anyone to run and manage their docker container applications on cloud. All one has to do is create a cluster and provide the name of the docker image to pull and run as a service in the cluster.
+</p> 
+<p>
+There's a lot of magic happening behind the scene and its not necessary for everyone to know. But if you are curious, this article is for you. Here we take a deep dive into how AWS ECS works and all the internal workings of ECS.
+This will definitely help one understand ECS better and also take a sneek peek at the secret sauce behind AWS ECS.      
+</p> 
+
+
+<h3>ECS: 10,000 Foot Overview</h3>
+
+<p>
+<b>1.</b> All docker container images are tagged and stored in AWS ECR (Elastic Container Repository)</br>
+<b>2.</b> ECS Task Definition contains details about the docker image location and the tag that needs to be run on the ECS as a container.</br>
+<b>3.</b> ECS reads the task definition and schedules the tasks on the EC2 instances registered with it. </br>
+<b>4.</b> Each EC2 instance(usually running Amazon Linux or Amazon Linux 2 ECS Optimized AMI) has a ECS-AGENT which pulls the docker image from ECR and runs it on the EC2 instance.</br> 
+</p>
+
+This looks dead simple. The EC2 instances are usually managed through auto-scaling group, allowing the number of tasks/containers running in the ECS cluster to group or shrink based on different cloudwatch metrics associated with the application.
+ 
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/ecs/aws-ecs-basic.png" style="width: 80%; height: 80%" alt="AWS ECS"></img>
+	<figcaption><b>Fig 1: AWS ECS</b></figcaption>
+	</figure>
+</div>
+
+
+<h3>ECS: Deep Dive</h3>
+
+Running containers in ECS can be broken down into two parts </br>
+1. <b>Scheduling:</b> ECS takes care of scheduling container(knows as tasks in ECS) on different EC2 instances. </br> 
+2. <b>Orchestration:</b> Once the task is scheduled on EC2, the ECS-AGENT takes of the running the image as a container. </br>
+
+The bulk of the magic happens within the "ECS Optimized Machine Image" that is running on the EC2 instances !!!
+
+<br/>
+<br/>
+
+<h4>AWS ECS Optimized AMI</h4>
+
+The ECS Optimized AMI is:<br/>
+
+<b>1.</b> Amazon Linux or Amazon Linux 2 (based on CentOS Kernel) <br/>
+<b>2.</b> Docker <br/>
+<b>3.</b> Comes pre-loaded with the following core packages: <br/>
+	
+<ul>
+	<li>
+		<a href="https://github.com/aws/amazon-ecs-agent">ECS Agent</a><br/>
+	</li>
+	<li>
+		<a href="https://cloudinit.readthedocs.io/en/latest/">Cloud-Init</a><br/>
+	</li>
+	<li>
+		<a href="https://github.com/projectatomic/container-storage-setup">Container Storage Setup</a><br/>
+	</li>
+</ul>
+<br/>
+
+<p>
+The machine has Docker running as daemon. There is also a start up script which pulls and runs the ECS-Agent as a dameon.
+Its important to keep the ECS-Agent running. <br/><br/>
+
+<b>The following are the tasks that the ECS-Agent does: </br><br/></b>
+
+<b>1.</b> Parse the ECS Task Definition details, pull the docker image from ECR and run the image on the EC2 instance based on the run config provided in the ECS Task Definition.<br/>
+<b>2.</b> Clean up old, unused images of applications that were run on the EC2 instance. <br/>
+<b>3.</b> Rotate logs files generated b ECS-Agent.<br/>
+<b>4.</b> Integrate with AWS IAM to generate temporary credentials based on the IAM Role associated with the ECS TASK (configured in task definition) and make it available to the running ECS Task.<br/>
+
+<p>
+
+
+
+<br/>
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/ecs/ecs-agent-service.png" style="width: 80%; height: 80%" alt="ECS Agent Service"></img>
+	<figcaption><b>Fig 3: ECS Agent Service  [/etc/systemd/system/ecs-agent.service]</b></figcaption>
+	</figure>
+</div>
+	 
+
+
+
+
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/ecs/ecs-ami-x-ray.png" style="width: 80%; height: 80%" alt="AWS ECS Optimzied AMI X Ray"></img>
+	<figcaption><b>Fig 4: ECS Optimized AMI</b></figcaption>
+	</figure>
+</div>
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
