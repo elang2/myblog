@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://elang2.github.io/myblog/sitemap.xml
