@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Amazon ECS - Deep dive & Demystify ECS Optmized AMI</title>
+		<title>Amazon ECS - Deep dive & Demystify ECS Optimized AMI</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="description" content="Understand what goes inside the ECS Optmized AMI">
+		<meta name="description" content="Understand what goes inside the ECS Optimized AMI">
 		<meta name="keywords" content="Microservices, AWS, AMI, ECS, Docker, Image">
 		<link rel="stylesheet" href="../assets/css/main.css" />
 		<link rel="stylesheet" href="./css/custom.css" />
@@ -49,7 +49,7 @@
 							<section class="post">
 								<header class="major">
 									<span class="date">August 25, 2019</span>
-									<h3>Amazon ECS - Deep dive & Demystify ECS Optmized AMI</h3>
+									<h3>Amazon ECS - Deep dive & Demystify ECS Optimized AMI</h3>
 								</header>
 
 <p>
@@ -57,7 +57,7 @@ AWS Elastic Container Service(ECS) makes it very easy for anyone to run and mana
 </p> 
 <p>
 There's a lot of magic happening behind the scene and its not necessary for everyone to know. But if you are curious, this article is for you. Here we take a deep dive into how AWS ECS works and all the internal workings of ECS.
-This will definitely help one understand ECS better and also take a sneek peek at the secret sauce behind AWS ECS.      
+This will definitely help one understand ECS better and also take a sneak peek at the secret sauce behind AWS ECS.      
 </p> 
 
 
@@ -150,9 +150,9 @@ early initialization of cloud instances. <br/>
 
 This package is also responsible for running the "user-data" scripts that are provided during the EC2 instance start up. Without the cloud-init package the user-data script won't run. The user data provided to the EC2 instance is stored under <b>"/var/lib/cloud/instance/user-data.txt" </b>.</br>
 
-Cloud-init also enabled one to configure scripts that can be run everytime the OS boots on the EC2 instance or per start of the instance or once. Scripts can be placed in the appropriate directory under "<b>/var/lib/cloud/scripts</b>"</br>
+Cloud-init also enabled one to configure scripts that can be run every time the OS boots on the EC2 instance or per start of the instance or once. Scripts can be placed in the appropriate directory under "<b>/var/lib/cloud/scripts</b>"</br>
 
-Instance information is fetched from AWS EC2 metadata enpoint and stored in <b>/run/cloud-init/instance-data.json</b> </br> 
+Instance information is fetched from AWS EC2 metadata endpoint and stored in <b>/run/cloud-init/instance-data.json</b> </br> 
 
 
 <div align="center" >
@@ -172,7 +172,7 @@ Instance information is fetched from AWS EC2 metadata enpoint and stored in <b>/
 
 <p>
  
-ECS optimized AMI has in-built scripts to spin up a 22GB EBS volume and attach it to the EC2 instance as part of the boot up process. This additional volume is used as a scratch space docker, the ECS-AGENT container and other containers that would run on on the EC2 instances. 
+ECS optimized AMI has in-built scripts to spin up a 22GB EBS volume and attach it to the EC2 instance as part of the boot up process. This additional volume is used as a scratch space docker, the ECS-AGENT container and other containers that would run on the EC2 instances. 
 The additional volume is not used for storing anything related to the operating system running on EC2. 
 <br/>
 
@@ -247,7 +247,7 @@ Docker versions >= 1.8
 
 <h4>Other observations</h4>
 </br>
-<b>1.</b> ECS-Agent container and any other containers on the EC2 should be run with HOST networking mode other wise the container will not be able to reach the AWS container meta-data endpoint to retrieve the ECS Task IAM roles or other metadata related to the container. 
+<b>1.</b> ECS-Agent container and any other containers on the EC2 should be run with HOST networking mode otherwise the container will not be able to reach the AWS container meta-data endpoint to retrieve the ECS Task IAM roles or other metadata related to the container. 
 	 
 
 							</section>
