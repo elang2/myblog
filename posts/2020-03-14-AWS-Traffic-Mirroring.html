@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>AWS Traffic Replication</title>
+		<title>AWS Traffic Mirroring(aka. Replication)</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="This article explain how to replicate traffic from one environment to another in AWS">
@@ -53,7 +53,7 @@
 								</header>
 
 
-<h3>What is traffic replication ? </h3>
+<h3>What Is Traffic Mirroring (Replication) ? </h3>
 </br>
 Traffic replication is a process of making copies of incoming traffic. This could be all traffic coming into a particular host or only traffic coming to a particular port(s) on a host.
 
@@ -111,7 +111,7 @@ Unaccounted use cases during development
 </ul>
 
 
-Now, what if we had an environment (say pre-production) to which the replicated production traffic can be sent to. This environment would receive a wide variety of requests and also follow a traffic pattern similar to production. This makes it easier to validate any new code before pushing to production and also to troubleshoot any issues that were found in Production environment.
+Now, what if we had an environment (say pre-production) to which the replicated production traffic can be sent to. This environment would receive a wide variety of requests and also follow a traffic pattern similar to production. This makes it easier to validate any new code before pushing to production and also to troubleshoot any issues that pop up only in  production environment and hard to reproduce in non-prod environments.
  
 </br></br>
  <div align="center">
@@ -238,8 +238,8 @@ GoReplay will compete for CPU and Memory on the host machines, which indirectly 
 
 <h4>Conclusion</h4>
 
-Traffic replication is an effective way of maintaining a near production like environment with minimal effort. The benefits replication goes beyond just  monitoring and troubleshooting issues. The replicated information can be used in performing data analysis,  traffic pattern behavior and in detecting security vulnerabilities and attacks on the system.
-<br/><br/>In my opinion and based on personal experience I find the AWS VPC mirroring the best approach for replicating traffic for applications deployed on AWS.
+Traffic replication is an effective way of maintaining a near production like environment with minimal effort. The benefits of replication goes beyond just  monitoring and troubleshooting issues. The replicated information can be used in performing data analysis,  traffic pattern behavior and in detecting security vulnerabilities and attacks on the system.
+<br/><br/>In my opinion and based on personal experience I find the AWS VPC mirroring to be the best approach for replicating traffic for applications deployed on AWS.
 
 
 
