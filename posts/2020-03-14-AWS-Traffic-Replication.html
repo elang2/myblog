@@ -111,7 +111,7 @@ Unaccounted use cases during development
 </ul>
 
 
-Now, what if we had an environment (say pre-production) to which the production replicated traffic are sent to. This environment would receive a wide variety of requests and also follow a traffic pattern similar to production. This makes it easier to validate any new code before pushing to production and also to troubleshoot any issues that were isolated in Production environment.
+Now, what if we had an environment (say pre-production) to which the replicated production traffic can be sent to. This environment would receive a wide variety of requests and also follow a traffic pattern similar to production. This makes it easier to validate any new code before pushing to production and also to troubleshoot any issues that were found in Production environment.
  
 </br></br>
  <div align="center">
@@ -236,6 +236,10 @@ GoReplay will compete for CPU and Memory on the host machines, which indirectly 
 
 
 
+<h4>Conclusion</h4>
+
+Traffic replication is an effective way of maintaining a near production like environment with minimal effort. The benefits replication goes beyond just  monitoring and troubleshooting issues. The replicated information can be used in performing data analysis,  traffic pattern behavior and in detecting security vulnerabilities and attacks on the system.
+<br/><br/>In my opinion and based on personal experience I find the AWS VPC mirroring the best approach for replicating traffic for applications deployed on AWS.
 
 
 
