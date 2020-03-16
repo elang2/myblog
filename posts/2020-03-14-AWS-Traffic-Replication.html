@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>AWS Traffic Replication</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="This article explain how to replicate traffic from one environment to another in AWS">
+		<meta name="keywords" content="Microservices, AWS, Cloud, Traffic Replication">
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="./css/custom.css" />
+		<link rel="stylesheet" href="./css/font-awesome.min.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="../index.html" class="logo">Elan's Tech Blog</a>
+					</header>
+					
+					<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="../index.html">Home</a></li>
+							<li><a href="../about-me.html">About Me</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+							<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+					
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">September 29, 2018</span>
+									<h3>AWS Traffic Replication</h3>
+								</header>
+
+
+<h3>What is traffic replication ? </h3>
+</br>
+Traffic replication is a process of making copies of incoming traffic. This could be all traffic coming into a particular host or only traffic coming to a particular port(s) on a host.
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-1.png" style="width: 50%; height: 50%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 1: Traffic Replication</b></figcaption>
+	</figure>
+</div>
+ 
+<b></b>
+
+<h3>Why replicate traffic? </h3></br>
+
+
+  
+For any web application it's now a norm to have separate environments for Development, Testing/Staging/Pre-Production and Production environment. 
+The utilization of the application is each environment is varied and the traffic pattern on each is different. 
+</br>
+</br>
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-2.png" style="width: 50%; height: 50%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 2: Application Environments</b></figcaption>
+	</figure>
+</div>  
+  
+  </br></br>
+  <div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-3.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 3: Environment Utilization</b></figcaption>
+	</figure>
+</div>  
+  
+  <br/><br/>
+  
+  
+Even after all the performance and automated tests it's still possible for new bugs to pop-up in production environment. 
+</br></br>
+Common causes for the bugs : </br>
+<ul>
+<li>
+Due to data issues in the incoming traffic. </br>
+</li>
+
+<li>
+Unaccounted use cases during development
+</li>
+<li>
+ A certain traffic pattern or sequence of flows that cause an issue
+</li>
+</ul>
+
+
+Now, what if we had an environment (say pre-production) to which the production replicated traffic are sent to. This environment would receive a wide variety of requests and also follow a traffic pattern similar to production. This makes it easier to validate any new code before pushing to production and also to troubleshoot any issues that were isolated in Production environment.
+ 
+</br></br>
+ <div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-4.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 4: Replicate Production Traffic</b></figcaption>
+	</figure>
+</div> 
+
+</br></br>
+
+<h3>How to replicate traffic in AWS ? </h3>
+
+In this section I will explain the different ways to replicate traffic in AWS along with the pros & cons of each approach. <br/><br/>
+
+<h4>Approach #1 - Traffic Replication using AWS VPC Mirroring</h4>
+
+AWS has a <i><b><a href="https://docs.aws.amazon.com/vpc/latest/mirroring/what-is-traffic-mirroring.html">VPC mirroring</a></b></i> service which allows one to replicate traffic coming into an ENI (elastic networking interface) to another ENI or to a Load Balancer. 
+
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-5.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 5: Architecture: VPC Traffic Mirroring</b></figcaption>
+	</figure>
+</div> 
+
+<br/>
+The source for traffic mirroring is an ENI. Even load balancers are backed by multiple (based on incoming scale of traffic) ENI's and it's possible to replicate traffic directly from the Load Balancers instead of hooking in with the target host ENI's.
+<br/><br/>
+
+AWS takes the source traffic packet and wraps that as a <i><b><a href="https://tools.ietf.org/html/rfc7348">VXLAN</a></b></i> packet. The original packet is placed in the payload of the VXLAN packet. The target receiving the replicated packet has to unwrap the VXLAN packet and extract the original payload for processing.
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-6.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 6: VXLAN unwrap & Replay</b></figcaption>
+	</figure>
+</div> 
+
+
+<b>GoLang Script to Process Replicated Traffic:</b> <br/>
+
+<b>Download Script :</b> <a href="https://github.com/elang2/AWS-Traffic-Replication/blob/master/aws-traffic-replication.go">https://github.com/elang2/AWS-Traffic-Replication/blob/master/aws-traffic-replication.go</a>
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-7.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 7: GoLang Script - Part 1</b></figcaption>
+	</figure>
+</div> 
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-8.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 8: GoLang Script - Part 2</b></figcaption>
+	</figure>
+</div> 
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-9.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 9: GoLang Script - Part 3</b></figcaption>
+	</figure>
+</div> 
+
+ 
+<br/><br/>
+<b>Pros:</b>
+<ul>
+<li>
+Non-intrusive way for replication traffic in an AWS environment. No need to install additional tools or packages on any host/EC2 instance.
+</li>
+<li>
+Scalable
+</li>
+<li>
+Live, low latency traffic replication
+</li>
+</ul>
+
+
+<br/>  
+<h4>Approach #2 - Traffic replication via a Third Party Tool</h4>
+
+<b><a href="https://github.com/buger/goreplay">GoReplay</a></b> is an excellent tool to replicate traffic. 
+The tool can be installed on an EC2 instance and can be configured to replicate traffic to any target.
+
+
+<div align="center">
+	<figure class="half center">
+	<img src="../images/traffic-replication/traffic-replication-10.png" style="width: 70%; height: 70%" alt="RBAC Design For MicroServies"></img>
+	<figcaption><b>Fig 10: Traffic Replication using GoReplay</b></figcaption>
+	</figure>
+</div> 
+
+
+<br/><br/>
+<b>Pros:</b>
+<ul>
+<li>
+Simple, easy and quick to setup and configure.
+</li>
+<li>
+Provides ability to filter traffic, rewrite request and replay as needed.
+</li>
+</ul>
+
+<b>Cons:</b>
+<ul>
+<li>
+Intrusive Approach. GoReplay needs to be installed and configured in EC2 instances that would be the source for replication.
+</li>
+<li>
+GoReplay will compete for CPU and Memory on the host machines, which indirectly may affect the application performance.
+</li>
+</ul>
+
+
+
+
+
+
+ 
+  
+
+    
+  
+
+
+							</section>
+
+					</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/google-analytics.js"></script>
+
+	</body>
+</html>
