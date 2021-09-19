@@ -1,2 +1,8 @@
 
 bin/
+myblog.iml
+.idea/vcs.xml
+.idea/sonarlint/issuestore/index.pb
+.idea/modules.xml
+.idea/misc.xml
+.idea/checkstyle-idea.xml
